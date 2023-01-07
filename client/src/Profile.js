@@ -19,7 +19,7 @@ const Profile = () => {
     <>
     <br/>
   
-      <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
+      <button onClick={functionToArtistSearch}>Go to Artist Search Page with Heroku</button>
       <br />
       <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
 
