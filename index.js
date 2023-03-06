@@ -5,6 +5,10 @@ const querystring = require("querystring");
 const axios = require("axios");
 const path = require('path');
 
+const mongoose = require("mongoose");
+app.use(express.json()); // to parse incoming json
+const SingleTrack = require("./models/singleTrack.js");
+
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -112,6 +116,40 @@ app.get("/refresh_token", (req, res) => {
     });
 });
 
+app.get("/get_tracks", (req, res) => {
+  console.log("Get tracks req received");
+  SingleTrack.find().then((foundSingleTracks) => {
+    console.log("single tracks are:", foundSingleTracks);
+    res.json({
+      message: "All single tracks",
+      tracks: foundSingleTracks,
+    });
+  });
+});
+
+app.post("/post_track", async (req, res) => {
+  const artist = req.body.artist;
+  const track = req.body.track;
+
+  // create a new Post instance
+  const singleTrack = new SingleTrack({
+    artist: artist,
+    track: track,
+  });
+
+  // save the instance to the database
+  try {
+    const postSingleTrack = await singleTrack.save();
+    postSingleTrack;
+    res.status(201).json({
+      message: "Track posted created successfully!",
+      postSingleTrack: postSingleTrack,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 const PORT = process.env.PORT || 8888;
 
 // All remaining requests return the React app, so it can handle routing.
@@ -119,6 +157,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Express app listening at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Express app listening at http://localhost:${PORT}`);
+// });
+
+mongoose
+  .connect(
+    "mongodb+srv://FrederickG:UXBuVczDI9svDoxj@cluster0.cdybeyt.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    app.listen(PORT);
+    console.log("Mongo listening");
+    console.log(`Express app listening at http://localhost:${PORT}`);
+  })
+  .catch((err) => console.log("err", err));
