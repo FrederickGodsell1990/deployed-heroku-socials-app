@@ -16,6 +16,16 @@ const Profile = () => {
     navigate("/favourite_artists");
   };
 
+  const axiosGetRequest = async () => {
+    try{
+      await axios.get('/get_tracks')
+  
+    } catch(err){
+       console.log('get req error', err)
+    }
+  }
+  
+
   const handleSingleTrackPostSubmit = (e) => {
     e.preventDefault();
 
@@ -33,6 +43,7 @@ const Profile = () => {
       artist : artistDetails,
       track : trackDetails
     }
+
 
     const axiosPostRequest = async () => {
       try{
@@ -54,7 +65,9 @@ const Profile = () => {
       <button onClick={functionToArtistSearch}>Go to Artist Search Page with Heroku - changes added then taken!</button>
       <br />
       <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
-      <a className='mongoGetTracks' href="http://localhost:8888/get_tracks">Get tracks</a>
+      <button onClick={axiosGetRequest} >Get tracks</button>
+      
+      
       <form onSubmit={(e) => handleSingleTrackPostSubmit(e)} >
     <label>Enter track info below;</label>
     <br/>
