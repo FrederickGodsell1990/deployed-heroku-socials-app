@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import {
-  GoToProfileButton
-} from "./styling/ComponentStyles.js";
-import axios from 'axios';
+import React from "react";
+
+
 
 const Profile = () => {
+
   const navigate = useNavigate();
 
   const functionToArtistSearch = () => {
@@ -16,67 +15,25 @@ const Profile = () => {
     navigate("/favourite_artists");
   };
 
-  const axiosGetRequest = async () => {
-    try{
-      await axios.get('/get_tracks')
-  
-    } catch(err){
-       console.log('get req error', err)
-    }
-  }
-  
-
-  const handleSingleTrackPostSubmit = (e) => {
-    e.preventDefault();
-
-    let artistDetails = e.target[0].value;
-     let trackDetails = e.target[1].value;
-    
-    console.log('Artist is',artistDetails, 'track is',trackDetails)
-
-    const config = {
-      Key : 'Content-Type',
-      Value : 'application/json'
-    }
-    
-    const body = {
-      artist : artistDetails,
-      track : trackDetails
-    }
-
-
-    const axiosPostRequest = async () => {
-      try{
-      //  await axios.post('http://localhost:8888/post_track',body,config)
-       await axios.post('/post_track',body,config)
-      }
-      catch(err){
-        console.log(err)
-      }
-      
-    }
-   axiosPostRequest();
+  const functionToMongoDBFunction = () => {
+    navigate("/release_radar");
   };
 
-  return (
-    <>
-    <br/>
   
-      <button onClick={functionToArtistSearch}>Go to Artist Search Page with Heroku - changes added then taken!</button>
-      <br />
+
+  return (
+    <React.Fragment >
+      <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
       <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
-      <button onClick={axiosGetRequest} >Get tracks</button>
+      <button onClick={functionToMongoDBFunction}>Go to MongoDB Page</button>
       
-      
-      <form onSubmit={(e) => handleSingleTrackPostSubmit(e)} >
-    <label>Enter track info below;</label>
-    <br/>
-    <input type="text"  name="artist" placeholder="Enter artist name..." required/>
-    <input type="text" name="track" placeholder="Enter track name..." required/>
-    <input type="submit"></input>
-    </form>
-    </>
+    </React.Fragment>
   );
+
+ 
+
 };
+
+ 
 
 export default Profile;

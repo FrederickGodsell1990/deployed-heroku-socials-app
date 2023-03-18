@@ -3,19 +3,15 @@ const app = express();
 require("dotenv").config();
 const querystring = require("querystring");
 const axios = require("axios");
-const path = require('path');
 
 const mongoose = require("mongoose");
 app.use(express.json()); // to parse incoming json
 const SingleTrack = require("./models/singleTrack.js");
+const ReleaseRadarModel = require("./models/releaseRadarSchema.js");
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
-const FRONTEND_URI = process.env.FRONTEND_URI;
-
-// Priority serve any static files.
-app.use(express.static(path.resolve(__dirname, './client/build')));
 
 const generateRandomString = (length) => {
   let text = "";
@@ -34,7 +30,8 @@ app.get("/login", (req, res) => {
 
   res.cookie(stateKey, state);
 
-  const scope = "user-read-private user-read-email user-follow-modify user-follow-read user-top-read";
+  const scope =
+    "user-read-private user-read-email user-follow-modify user-follow-read user-top-read";
 
   const queryParams = querystring.stringify({
     client_id: CLIENT_ID,
@@ -68,21 +65,18 @@ app.get("/callback", (req, res) => {
       });
 
       if (response.status === 200) {
-        const { access_token, token_type, refresh_token, expires_in } = response.data;
-     
+        const { access_token, token_type, refresh_token, expires_in } =
+          response.data;
 
         const queryParams = querystring.stringify({
           access_token,
           refresh_token,
-          expires_in
+          expires_in,
         });
 
-        // res.redirect(`http://localhost:3000/?${queryParams}`);
-        res.redirect(`${FRONTEND_URI}/?${queryParams}`);
+        res.redirect(`http://localhost:3000/?${queryParams}`);
       } else {
-      
-        res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
-      
+        res.redirect(`/?${querystring.stringify({ error: "invalid_token" })}`);
       }
     } catch (error) {
       console.log(error);
@@ -119,7 +113,11 @@ app.get("/refresh_token", (req, res) => {
 app.get("/get_tracks", (req, res) => {
   console.log("Get tracks req received");
   SingleTrack.find().then((foundSingleTracks) => {
-    console.log("single tracks are:", foundSingleTracks);
+    console.log(
+      "single tracks are:",
+      typeof foundSingleTracks,
+      foundSingleTracks
+    );
     res.json({
       message: "All single tracks",
       tracks: foundSingleTracks,
@@ -150,24 +148,56 @@ app.post("/post_track", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8888;
+app.post("/post_release_radar_tracks", async (req, res) => {
+  const releaseRadarTracksInObjectForm = await req.body.objectFromFrontEnd;
+ 
 
-// All remaining requests return the React app, so it can handle routing.
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  const arrayOfNewTracks = [];
+
+  
+  await Promise.all(
+    releaseRadarTracksInObjectForm.map(async (x, i) => {
+      const toMongo = new ReleaseRadarModel({
+        artist: x.artist,
+        trackName: x.trackName,
+        trackSpotifyID: x.trackSpotifyID,
+        dateAdded : x.dateAdded
+      });
+      
+
+      try {
+        const trackIDCall = await ReleaseRadarModel.find().where({
+          trackSpotifyID: x.trackSpotifyID,
+        });
+        if (trackIDCall.length === 0) {
+          const postToMongo = await toMongo.save();
+          postToMongo;
+        
+          arrayOfNewTracks.push([postToMongo.artist, postToMongo.trackName]);
+        
+          return arrayOfNewTracks;
+        } 
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  );
+  console.log(arrayOfNewTracks);
+  res.status(201).json({
+    message: "Below tracks added to database successfully!",
+    arrayOfNewTracks: arrayOfNewTracks,
+  });
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Express app listening at http://localhost:${PORT}`);
-// });
+const port = 8888;
 
 mongoose
   .connect(
     "mongodb+srv://FrederickG:UXBuVczDI9svDoxj@cluster0.cdybeyt.mongodb.net/?retryWrites=true&w=majority"
   )
   .then((result) => {
-    app.listen(PORT);
+    app.listen(8888);
     console.log("Mongo listening");
-    console.log(`Express app listening at http://localhost:${PORT}`);
+    console.log(`Express app listening at http://localhost:${port}`);
   })
   .catch((err) => console.log("err", err));
