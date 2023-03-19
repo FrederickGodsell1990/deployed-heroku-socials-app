@@ -15,6 +15,7 @@ import FavouriteArtistsFunction from "./FavouriteArtistsFunction"
 import GlobalStyle  from "./styling/GlobalStyles";
 import {LogOutButtonRight} from './styling/ComponentStyles.js';
 import Login from "./Login.js"
+import ReleaseRadarFunction from "./releaseRadar";
 
 
 
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/playlist" element={<h1>Hi there</h1>}></Route>
                 <Route path="/artist_search" element={<ArtistSearch />}></Route>
                 <Route path="/favourite_artists" element={<FavouriteArtistsFunction />}></Route>
+                <Route path="/release_radar" element={<ReleaseRadarFunction />}></Route>
               </Routes>
             </Router>
           </>

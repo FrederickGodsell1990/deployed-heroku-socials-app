@@ -150,6 +150,47 @@ app.post("/post_track", async (req, res) => {
   }
 });
 
+app.post("/post_release_radar_tracks", async (req, res) => {
+  const releaseRadarTracksInObjectForm = await req.body.objectFromFrontEnd;
+ 
+
+  const arrayOfNewTracks = [];
+
+  
+  await Promise.all(
+    releaseRadarTracksInObjectForm.map(async (x, i) => {
+      const toMongo = new ReleaseRadarModel({
+        artist: x.artist,
+        trackName: x.trackName,
+        trackSpotifyID: x.trackSpotifyID,
+        dateAdded : x.dateAdded
+      });
+      
+
+      try {
+        const trackIDCall = await ReleaseRadarModel.find().where({
+          trackSpotifyID: x.trackSpotifyID,
+        });
+        if (trackIDCall.length === 0) {
+          const postToMongo = await toMongo.save();
+          postToMongo;
+        
+          arrayOfNewTracks.push([postToMongo.artist, postToMongo.trackName]);
+        
+          return arrayOfNewTracks;
+        } 
+      } catch (error) {
+        console.log(error);
+      }
+    })
+  );
+  console.log(arrayOfNewTracks);
+  res.status(201).json({
+    message: "Below tracks added to database successfully!",
+    arrayOfNewTracks: arrayOfNewTracks,
+  });
+});
+
 const PORT = process.env.PORT || 8888;
 
 // All remaining requests return the React app, so it can handle routing.
