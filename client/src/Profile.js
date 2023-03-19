@@ -62,7 +62,7 @@ const Profile = () => {
     <>
     <br/>
   
-      <button onClick={functionToArtistSearch}>Go to Artist Search Page with Heroku - changes added then taken!</button>
+      <button onClick={functionToArtistSearch}>Go to Artist Search Page with Heroku - changes pissed!</button>
       <br />
       <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
       <button onClick={axiosGetRequest} >Get tracks</button>
