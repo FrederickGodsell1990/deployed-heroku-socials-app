@@ -8,6 +8,7 @@ const path = require('path');
 const mongoose = require("mongoose");
 app.use(express.json()); // to parse incoming json
 const SingleTrack = require("./models/singleTrack.js");
+const ReleaseRadarModel = require("./models/releaseRadarSchema.js");
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
