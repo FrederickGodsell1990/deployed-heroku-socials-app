@@ -1,7 +1,7 @@
 const LOGIN_URI =
   process.env.NODE_ENV !== 'production'
     ? 'http://localhost:8888/login'
-    : 'https://git.heroku.com/heroku-socials-app-staging/login';
+    : 'https://heroku-socials-app-staging/login';
 
 const Login = () => {
   return (
