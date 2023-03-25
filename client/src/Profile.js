@@ -20,7 +20,6 @@ const Profile = () => {
     navigate("/release_radar");
   };
 
-  console.log(process.env.NODE_ENV)
 
   
   return (

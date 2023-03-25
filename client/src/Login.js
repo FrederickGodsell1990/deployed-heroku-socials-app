@@ -16,8 +16,7 @@
       LOGIN_URI =  'https://heroku-socials-app-attempt-1.herokuapp.com/login';
     }
  
-   
-
+    console.log(process.env.NODE_ENV)
 
 
 const Login = () => {
