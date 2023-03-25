@@ -13,13 +13,12 @@
       console.log('i am staging ===', process.env.REACT_APP_ENV); 
       LOGIN_URI =  'https://heroku-socials-app-staging.herokuapp.com/login';
     }
-    if (process.env.REACT_APP_ENV === 'production'){
+    if (process.env.NODE_ENV === 'production'){
       console.log('i am production now ===', process.env.REACT_APP_ENV);
       LOGIN_URI =  'https://heroku-socials-app-attempt-1.herokuapp.com/login';
     }
  
     console.log('process.env.REACT_APP_ENV ===',process.env.REACT_APP_ENV)
-
 
 const Login = () => {
   return (
