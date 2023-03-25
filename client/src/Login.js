@@ -9,14 +9,16 @@
     if (process.env.NODE_ENV === 'development') {
       LOGIN_URI =  'http://localhost:8888/login'
     }
-    if (process.env.NODE_ENV === 'staging') { 
+    if (process.env.NODE_ENV === 'staging') {
+      console.log('i am staging ===', process.env.NODE_ENV); 
       LOGIN_URI =  'https://heroku-socials-app-staging.herokuapp.com/login';
     }
     if (process.env.NODE_ENV === 'production'){
+      console.log('i am production ===', process.env.NODE_ENV);
       LOGIN_URI =  'https://heroku-socials-app-attempt-1.herokuapp.com/login';
     }
  
-    console.log(process.env.NODE_ENV)
+    console.log('process.env.NODE_ENV ===',process.env.NODE_ENV)
 
 
 const Login = () => {
