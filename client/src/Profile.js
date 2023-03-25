@@ -26,7 +26,7 @@ const Profile = () => {
     <React.Fragment >
     <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
     <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
-    <button onClick={functionToMongoDBFunction}>Go to MongoDB Page - staging environment fully functional</button>
+    <button onClick={functionToMongoDBFunction}>Go to MongoDB Page - staging environment fully functional!</button>
     
   </React.Fragment>
   );
