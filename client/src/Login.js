@@ -14,7 +14,7 @@
       LOGIN_URI =  'https://heroku-socials-app-staging.herokuapp.com/login';
     }
     if (process.env.NODE_ENV === 'production'){
-      console.log('i am production ===', process.env.NODE_ENV);
+      console.log('i am production now ===', process.env.NODE_ENV);
       LOGIN_URI =  'https://heroku-socials-app-attempt-1.herokuapp.com/login';
     }
  
