@@ -6,7 +6,7 @@
 
     let LOGIN_URI;
 
-    if (process.env.REACT_APP_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
       LOGIN_URI =  'http://localhost:8888/login'
     }
     if (process.env.REACT_APP_ENV === 'staging') {
