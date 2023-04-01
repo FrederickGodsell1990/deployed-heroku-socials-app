@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { GoToProfileButton } from "./styling/ComponentStyles.js";
 
 const ReleaseRadarFunction = () => {
   const [tracksObject, setTracksObject] = useState("");
@@ -81,7 +81,6 @@ const ReleaseRadarFunction = () => {
             artist2 = oneString.join(",");
           }
 
-         
           const artist = artist2;
           const trackID = item.track?.id;
           const trackName = item.track?.name;
@@ -91,7 +90,7 @@ const ReleaseRadarFunction = () => {
             artist: artist,
             trackName: trackName,
             trackSpotifyID: trackID,
-            dateAdded : dateAdded
+            dateAdded: dateAdded,
           };
 
           return simpleRadarObject;
@@ -106,7 +105,6 @@ const ReleaseRadarFunction = () => {
       const body = {
         objectFromFrontEnd: releaseRadarTracksAsSimpleObject,
       };
-    
 
       const sendRadarTracksToBackEnd = async () => {
         try {
@@ -116,6 +114,7 @@ const ReleaseRadarFunction = () => {
             config
           );
           const newTracks = axiosPost.data.arrayOfNewTracks;
+          console.log(arrayOfNewTracksState)
           setArrayOfNewTracksState(newTracks);
           console.log(axiosPost);
         } catch (err) {
@@ -152,13 +151,39 @@ const ReleaseRadarFunction = () => {
       <button onClick={axiosGetRequest}>Get tracks</button>
       {tracksObject && tracksObject.map((x) => x.artist)}
       <button onClick={getReleaseRadarPlaylist}>Get Release Radar data</button>
+
       {releaseRaderObject &&
-        releaseRaderObject.map((x) => <div key={x.track.id}>{x.track.id}</div>)}
-      <br />
-      {arrayOfNewTracksState ??
-        arrayOfNewTracksState.map((x, i) => {
-          return <div>{`${x[0]} by ${x[1]} added`}</div>;
+        releaseRaderObject.map((x) => {
+          return (
+            <>
+              <div key={x.track.id}>{x.track.id}</div>
+              <button>Remove</button>
+            </>
+          );
         })}
+
+      <br />
+      
+    
+
+{arrayOfNewTracksState &&
+  arrayOfNewTracksState.map((x, i) => {
+    const [track]= x[1].split('|');
+    const [artist] = x[0].split('|').map((name) => name.replace(/,/g, " & "));
+
+    return (
+      <>
+      <div key={i}>
+        {track} by {artist} added
+      </div>
+      <button>Remove</button>
+      <br/>
+
+      </>
+      
+    );
+  })}
+
     </React.Fragment>
   );
 };
