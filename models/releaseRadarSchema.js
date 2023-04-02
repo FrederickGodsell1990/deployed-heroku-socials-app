@@ -18,6 +18,10 @@ const releaseRadarSchema = new Schema({
   dateAdded : {
     type: String,
     required: true
+  },
+  markedAsRemoved : {
+    type: String,
+    required: false
   }
 
 });

@@ -3,7 +3,7 @@ const app = express();
 require("dotenv").config();
 const querystring = require("querystring");
 const axios = require("axios");
-const path = require('path');
+const path = require("path");
 
 const mongoose = require("mongoose");
 app.use(express.json()); // to parse incoming json
@@ -16,7 +16,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const FRONTEND_URI = process.env.FRONTEND_URI;
 
 // Priority serve any static files.
-app.use(express.static(path.resolve(__dirname, './client/build')));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 const generateRandomString = (length) => {
   let text = "";
@@ -35,7 +35,8 @@ app.get("/login", (req, res) => {
 
   res.cookie(stateKey, state);
 
-  const scope = "user-read-private user-read-email user-follow-modify user-follow-read user-top-read";
+  const scope =
+    "user-read-private user-read-email user-follow-modify user-follow-read user-top-read";
 
   const queryParams = querystring.stringify({
     client_id: CLIENT_ID,
@@ -69,21 +70,19 @@ app.get("/callback", (req, res) => {
       });
 
       if (response.status === 200) {
-        const { access_token, token_type, refresh_token, expires_in } = response.data;
-     
+        const { access_token, token_type, refresh_token, expires_in } =
+          response.data;
 
         const queryParams = querystring.stringify({
           access_token,
           refresh_token,
-          expires_in
+          expires_in,
         });
 
         // res.redirect(`http://localhost:3000/?${queryParams}`);
         res.redirect(`${FRONTEND_URI}/?${queryParams}`);
       } else {
-      
-        res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
-      
+        res.redirect(`/?${querystring.stringify({ error: "invalid_token" })}`);
       }
     } catch (error) {
       console.log(error);
@@ -153,20 +152,17 @@ app.post("/post_track", async (req, res) => {
 
 app.post("/post_release_radar_tracks", async (req, res) => {
   const releaseRadarTracksInObjectForm = await req.body.objectFromFrontEnd;
- 
 
   const arrayOfNewTracks = [];
 
-  
   await Promise.all(
     releaseRadarTracksInObjectForm.map(async (x, i) => {
       const toMongo = new ReleaseRadarModel({
         artist: x.artist,
         trackName: x.trackName,
         trackSpotifyID: x.trackSpotifyID,
-        dateAdded : x.dateAdded
+        dateAdded: x.dateAdded,
       });
-      
 
       try {
         const trackIDCall = await ReleaseRadarModel.find().where({
@@ -175,11 +171,16 @@ app.post("/post_release_radar_tracks", async (req, res) => {
         if (trackIDCall.length === 0) {
           const postToMongo = await toMongo.save();
           postToMongo;
-        
-          arrayOfNewTracks.push([postToMongo.artist, postToMongo.trackName]);
-        
+
+          arrayOfNewTracks.push([
+            postToMongo.artist,
+            postToMongo.trackName,
+            postToMongo.trackSpotifyID,
+            postToMongo.dateAdded,
+          ]);
+
           return arrayOfNewTracks;
-        } 
+        }
       } catch (error) {
         console.log(error);
       }
@@ -192,16 +193,39 @@ app.post("/post_release_radar_tracks", async (req, res) => {
   });
 });
 
+app.post("/remove_single_track_from_database", async (req, res) => {
+  console.log("the req body is", req.body.trackSpotifyID);
+
+  const filter = { trackSpotifyID : req.body.trackSpotifyID };
+  
+  const update = { $set: { markedAsRemoved: 'true' } };
+
+
+  try {
+    const removeTrackDatabaseOp = await ReleaseRadarModel.updateOne(
+      filter,
+      update
+    );
+    removeTrackDatabaseOp;
+    res.status(201).json({
+      message: "Track has been removed",
+      removeTrackDatabaseOp: removeTrackDatabaseOp,
+    });
+    console.log(removeTrackDatabaseOp);
+  } catch (error) {
+    console.log(error);
+  }
+
+
+});
+
 const PORT = process.env.PORT || 8888;
 
 // All remaining requests return the React app, so it can handle routing.
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Express app listening at http://localhost:${PORT}`);
-// });
 
 mongoose
   .connect(
@@ -213,3 +237,5 @@ mongoose
     console.log(`Express app listening at http://localhost:${PORT}`);
   })
   .catch((err) => console.log("err", err));
+
+  

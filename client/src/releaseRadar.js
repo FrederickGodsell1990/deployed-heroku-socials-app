@@ -114,7 +114,7 @@ const ReleaseRadarFunction = () => {
             config
           );
           const newTracks = axiosPost.data.arrayOfNewTracks;
-          console.log(arrayOfNewTracksState)
+          console.log(arrayOfNewTracksState);
           setArrayOfNewTracksState(newTracks);
           console.log(axiosPost);
         } catch (err) {
@@ -123,6 +123,20 @@ const ReleaseRadarFunction = () => {
       };
       sendRadarTracksToBackEnd();
     } catch (err) {}
+  };
+
+  const removeSingleTrackfromDatabase = async (trackSpotifyID, dateAdded) => {
+    const config = {
+      Key: "Content-Type",
+      Value: "application/json",
+    };
+
+    const body = {
+      trackSpotifyID,
+       dateAdded
+    };
+
+    axios.post("/remove_single_track_from_database", body, config);
   };
 
   return (
@@ -163,27 +177,26 @@ const ReleaseRadarFunction = () => {
         })}
 
       <br />
-      
-    
 
-{arrayOfNewTracksState &&
-  arrayOfNewTracksState.map((x, i) => {
-    const [track]= x[1].split('|');
-    const [artist] = x[0].split('|').map((name) => name.replace(/,/g, " & "));
+      {arrayOfNewTracksState &&
+        arrayOfNewTracksState.map((x, i) => {
+          const [artist] = x[0]
+            .split("|")
+            .map((name) => name.replace(/,/g, " & "));
+          const [track] = x[1].split("|");
+          const [trackSpotifyID] = x[2].split("|");
+          const [dateAdded] = x[3].split("|");
 
-    return (
-      <>
-      <div key={i}>
-        {track} by {artist} added
-      </div>
-      <button>Remove</button>
-      <br/>
-
-      </>
-      
-    );
-  })}
-
+          return (
+            <React.Fragment key={i}>
+              {track} by {artist} added + trackSpotifyID is {trackSpotifyID}
+              <button onClick={() => removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)}>
+                Remove
+              </button>
+              <br />
+            </React.Fragment>
+          );
+        })}
     </React.Fragment>
   );
 };
