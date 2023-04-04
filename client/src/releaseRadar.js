@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GoToProfileButton } from "./styling/ComponentStyles.js";
 
@@ -6,6 +6,7 @@ const ReleaseRadarFunction = () => {
   const [tracksObject, setTracksObject] = useState("");
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
+
 
   const handleSingleTrackPostSubmit = (e) => {
     e.preventDefault();
@@ -114,8 +115,9 @@ const ReleaseRadarFunction = () => {
             config
           );
           const newTracks = axiosPost.data.arrayOfNewTracks;
-          console.log(arrayOfNewTracksState);
+
           setArrayOfNewTracksState(newTracks);
+          console.log(arrayOfNewTracksState);
           console.log(axiosPost);
         } catch (err) {
           console.log(err);
@@ -133,10 +135,25 @@ const ReleaseRadarFunction = () => {
 
     const body = {
       trackSpotifyID,
-       dateAdded
+      dateAdded,
     };
+    try {
+      // post requst to server with body containing info on which track to mark as removed
+      axios.post("/remove_single_track_from_database", body, config);
+    } catch (error) {
+      console.log(error);
+    }
+    // maps over each new track, if removable tack re-set 'arrayOfNewTracksState' with a spliced array with the given track reomved
+    arrayOfNewTracksState.forEach((item, index) => {
+      const nestedArray = [...item];
+      if (nestedArray[2] === trackSpotifyID) {
+        // new array created so that react will recognise the new values and re-render
+        const updatedArray = [...arrayOfNewTracksState];
+        updatedArray.splice(index, 1);
 
-    axios.post("/remove_single_track_from_database", body, config);
+        setArrayOfNewTracksState(updatedArray);
+      }
+    });
   };
 
   return (
@@ -190,7 +207,11 @@ const ReleaseRadarFunction = () => {
           return (
             <React.Fragment key={i}>
               {track} by {artist} added + trackSpotifyID is {trackSpotifyID}
-              <button onClick={() => removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)}>
+              <button
+                onClick={() =>
+                  removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)
+                }
+              >
                 Remove
               </button>
               <br />
