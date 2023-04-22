@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 app.use(express.json()); // to parse incoming json
 const SingleTrack = require("./models/singleTrack.js");
 const ReleaseRadarModel = require("./models/releaseRadarSchema.js");
+const ReleaseRadarPlayListModel = require("./models/releaseRaderPlaylistSchema.js")
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -36,7 +37,7 @@ app.get("/login", (req, res) => {
   res.cookie(stateKey, state);
 
   const scope =
-    "user-read-private user-read-email user-follow-modify user-follow-read user-top-read";
+    "user-read-private user-read-email user-follow-modify user-follow-read user-top-read playlist-modify-public playlist-modify-private";
 
   const queryParams = querystring.stringify({
     client_id: CLIENT_ID,
@@ -196,10 +197,9 @@ app.post("/post_release_radar_tracks", async (req, res) => {
 app.post("/remove_single_track_from_database", async (req, res) => {
   console.log("the req body is", req.body.trackSpotifyID);
 
-  const filter = { trackSpotifyID : req.body.trackSpotifyID };
-  
-  const update = { $set: { markedAsRemoved: 'true' } };
+  const filter = { trackSpotifyID: req.body.trackSpotifyID };
 
+  const update = { $set: { markedAsRemoved: "true" } };
 
   try {
     const removeTrackDatabaseOp = await ReleaseRadarModel.updateOne(
@@ -215,8 +215,42 @@ app.post("/remove_single_track_from_database", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
 
+app.post("/log_playlist", async (req, res) => {
+  const monthAndYearCreated = req.body.monthAndYearCreated;
+  const playlistSpotifyID = req.body.playlistSpotifyID;
+  const playlistName = req.body.playlistName;
 
+ // create a new Post instance
+ const releaseRadarPlayListModel = new ReleaseRadarPlayListModel({
+  playlistSpotifyID: playlistSpotifyID,
+  monthAndYearCreated: monthAndYearCreated,
+  playlistName : playlistName
+});
+
+try {
+  const postPlaylist = await releaseRadarPlayListModel.save();
+  postPlaylist;
+  res.status(201).json({
+    message: "Playlist posted created successfully!",
+    postPlaylist: postPlaylist,
+  });
+} catch (err) {
+  console.log(err);
+}
+
+})
+
+app.get("/get_playlists", (req, res) => {
+  console.log("Get playlists req received");
+  ReleaseRadarPlayListModel.find().then((foundPlaylists) => {
+    console.log("Playlists are:", foundPlaylists);
+    res.json({
+      message: "All playlists",
+      playlists: foundPlaylists,
+    });
+  });
 });
 
 const PORT = process.env.PORT || 8888;
@@ -225,7 +259,6 @@ const PORT = process.env.PORT || 8888;
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-
 
 mongoose
   .connect(
@@ -237,5 +270,3 @@ mongoose
     console.log(`Express app listening at http://localhost:${PORT}`);
   })
   .catch((err) => console.log("err", err));
-
-  

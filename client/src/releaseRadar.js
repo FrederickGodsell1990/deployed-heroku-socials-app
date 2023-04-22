@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GoToProfileButton } from "./styling/ComponentStyles.js";
+import {
+  addToOrCreatePlaylistFunction,
+  TextCreatePlaylist,
+  addTracksToSpotifyPlaylist,
+} from "./databaseOperations.js";
 
 const ReleaseRadarFunction = () => {
   const [tracksObject, setTracksObject] = useState("");
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
-
 
   const handleSingleTrackPostSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +53,7 @@ const ReleaseRadarFunction = () => {
   };
 
   const { spotify_access_token } = window.localStorage;
+  console.log(spotify_access_token);
 
   const getReleaseRadarPlaylist = async () => {
     try {
@@ -156,6 +161,18 @@ const ReleaseRadarFunction = () => {
     });
   };
 
+  function createPlaylist() {
+    arrayOfNewTracksState.map((item, index) => {
+      const [trackSpotifyID] = item[2].split("|");
+      const [dateAdded] = item[3].split("|");
+      return console.log(dateAdded, trackSpotifyID);
+    });
+  }
+
+  const setNewTracksArrayToBlankArray = () => {
+    setArrayOfNewTracksState([]);
+  };
+
   return (
     <React.Fragment>
       <a className="mongoGetTracks" href="http://localhost:8888/get_tracks">
@@ -182,6 +199,42 @@ const ReleaseRadarFunction = () => {
       <button onClick={axiosGetRequest}>Get tracks</button>
       {tracksObject && tracksObject.map((x) => x.artist)}
       <button onClick={getReleaseRadarPlaylist}>Get Release Radar data</button>
+      <button
+        onClick={() => TextCreatePlaylist("TestID", "June 2023", "Test Name")}
+      >
+        Create Playlist
+      </button>
+      <button
+        onClick={() => {
+          addToOrCreatePlaylistFunction(arrayOfNewTracksState);
+          setNewTracksArrayToBlankArray();
+        }}
+      >
+        Integration addToOrCreatePlaylistFunction
+      </button>
+      <button
+        onClick={() => {
+          addToOrCreatePlaylistFunction([
+            [
+              "Athletes Of God,MSW,Lady Blackbird",
+              "Fontella (feat. Lady Blackbird) - Short & Crooked",
+              "2J4GWe13w13HEquefN2pNk",
+              "2023-07-06T23:00:00Z",
+            ],
+            [
+              "Max Clart ,Llyr",
+              "Solace In Structure - Llyr Remix",
+              "1jlKwf7LDUAwUZVX60aVyU",
+              "2023-04-06T23:00:00Z",
+            ],
+          ]);
+          setNewTracksArrayToBlankArray();
+        }
+         
+        }
+      >
+        July addToOrCreatePlaylistFunction
+      </button>
 
       {releaseRaderObject &&
         releaseRaderObject.map((x) => {
@@ -194,30 +247,34 @@ const ReleaseRadarFunction = () => {
         })}
 
       <br />
+      {console.log(arrayOfNewTracksState)}
+      {arrayOfNewTracksState && arrayOfNewTracksState.length !== 0 && (
+        <>
+          {arrayOfNewTracksState.map((x, i) => {
+            const [artist] = x[0]
+              .split("|")
+              .map((name) => name.replace(/,/g, " & "));
+            const [track] = x[1].split("|");
+            const [trackSpotifyID] = x[2].split("|");
+            const [dateAdded] = x[3].split("|");
 
-      {arrayOfNewTracksState &&
-        arrayOfNewTracksState.map((x, i) => {
-          const [artist] = x[0]
-            .split("|")
-            .map((name) => name.replace(/,/g, " & "));
-          const [track] = x[1].split("|");
-          const [trackSpotifyID] = x[2].split("|");
-          const [dateAdded] = x[3].split("|");
-
-          return (
-            <React.Fragment key={i}>
-              {track} by {artist} added + trackSpotifyID is {trackSpotifyID}
-              <button
-                onClick={() =>
-                  removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)
-                }
-              >
-                Remove
-              </button>
-              <br />
-            </React.Fragment>
-          );
-        })}
+            return (
+              <React.Fragment key={i}>
+                {track} by {artist} added + trackSpotifyID is {trackSpotifyID}
+                <button
+                  onClick={() =>
+                    removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)
+                  }
+                >
+                  Remove
+                </button>
+                <br />
+              </React.Fragment>
+            );
+          })}
+          <button onClick={() => createPlaylist()}>Add to playlist</button>
+        </>
+      )}
     </React.Fragment>
   );
 };
