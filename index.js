@@ -163,6 +163,9 @@ app.post("/post_release_radar_tracks", async (req, res) => {
         trackName: x.trackName,
         trackSpotifyID: x.trackSpotifyID,
         dateAdded: x.dateAdded,
+        album : x.album,
+        albumReleaseDate : x.albumReleaseDate,
+        albumImage : x.albumImage
       });
 
       try {
@@ -178,6 +181,9 @@ app.post("/post_release_radar_tracks", async (req, res) => {
             postToMongo.trackName,
             postToMongo.trackSpotifyID,
             postToMongo.dateAdded,
+            postToMongo.album,
+            postToMongo.albumReleaseDate,
+            postToMongo.albumImage
           ]);
 
           return arrayOfNewTracks;

@@ -20,6 +20,9 @@ const Profile = () => {
     navigate("/release_radar");
   };
 
+ 
+
+
 
   
   return (
@@ -27,7 +30,6 @@ const Profile = () => {
     <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
     <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
     <button onClick={functionToMongoDBFunction}>Go to MongoDB Page - stashed changes the third time</button>
-    
   </React.Fragment>
   );
 };

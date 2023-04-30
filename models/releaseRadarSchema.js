@@ -22,7 +22,22 @@ const releaseRadarSchema = new Schema({
   markedAsRemoved : {
     type: String,
     required: false
+  },
+  album : {
+    type: String,
+    required: false
+  },
+  albumReleaseDate : {
+    type: String,
+    required: false
+  },
+  albumImage : {
+    type: String,
+    required: false
   }
+
+
+
 
 });
 // export the model

@@ -16,6 +16,7 @@ import GlobalStyle  from "./styling/GlobalStyles";
 import {LogOutButtonRight} from './styling/ComponentStyles.js';
 import Login from "./Login.js"
 import ReleaseRadarFunction from "./releaseRadar";
+import GoogleNewsFunction from "./GoogleNews";
 
 
 
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/artist_search" element={<ArtistSearch />}></Route>
                 <Route path="/favourite_artists" element={<FavouriteArtistsFunction />}></Route>
                 <Route path="/release_radar" element={<ReleaseRadarFunction />}></Route>
+               
               </Routes>
             </Router>
           </>
