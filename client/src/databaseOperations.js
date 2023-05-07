@@ -1,14 +1,13 @@
 import axios from "axios";
 
-let spotify_access_token; 
+let spotify_access_token;
 
-if (process.env.NODE_ENV === 'development') {
-   spotify_access_token =
-  "BQCvir4tGBG-iHSsB53W-J7K8cIi90YFkn5xZgqf-RoGAe-Zayv5ANf8KY5GB0V68Byv5_6uq4oW9WGUBzbYweHSBYilyubn-oBbjYdx_GGqd5yuNGtfXwUE5OHOYpgX2MbVa9lsQpREJrordK_6766qjOCuoPPOgFEWgcn11cfl32TcoVkBwaICWKnR5S2eRa-WnHsfDE-UCQLV0OaL50Nq8VwuiLfRXW77GAexvEgZ4SUzFra7dzYUVeYui7IesdUOiyI9YCBniqy_gOsEFKMhj06Fs0A";
+if (process.env.NODE_ENV === "development") {
+  spotify_access_token =
+    "BQAh52RV-U0PZp1qpUFbJeZhUQ-LNEkcT4KYEXGh13HlR-9ej3Fl0uPXmYXbdEPQKBbnkOR25Ll5xSY7gjEgcXrsiPnJd84msL60MFcp6xlP16ZJjkH0oV6Qc8H9S11ufbe6J27SjrhI_GogIkJKUkArfUXo773DqfVrrEe8V9CLv794-Z5IVNoFZcKK56NVpTGWdXgLZVYPpaynF1xOpaKstNNB0bjDLbPHQT6Nx_fY61P18H3c7w0fbjSXsyyoG148ignp0rud_8cAda8256Ir6F8PgT4";
 } else {
-  spotify_access_token = window.localStorage.spotify_access_token
+  spotify_access_token = window.localStorage.spotify_access_token;
 }
-
 
 // this function logs the given playlist in the database, storing the 3 values seen in the arguments
 async function TextCreatePlaylist(
@@ -37,9 +36,8 @@ async function TextCreatePlaylist(
   }
 }
 
-  // this function just gets playlists that are logged in the database and return them as an object
+// this function just gets playlists that are logged in the database and return them as an object
 async function returnPlayListsInDatabase() {
-  
   try {
     const getPlaylistsResponse = await axios.get("/get_playlists");
     const tracksAsObject = getPlaylistsResponse.data.playlists;
@@ -138,14 +136,13 @@ async function formatPlayListInputAndBackendLog(unuqueSpoitifyPlaylistData) {
 // adds new tracks if a playlist existing for the given month, or creates a new playlist if
 // one does not exist for the current month
 async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
-  
   // variable for the date of the newly added tracks. They will always be the same as
-  // new tracks come from 'release radar' playlist which wipes clean + resests each Friday   
-  const referenceDateForTranceOfTracks = dataOfTrackAdded[0][3];
+  // new tracks come from 'release radar' playlist which resests each Friday
+  const referenceDateForTrancheOfTracks = dataOfTrackAdded[0][3];
 
   // regex to extract month of newly added track
   const regex = /^(\d{4})-(\d{2})/;
-  const match = regex.exec(referenceDateForTranceOfTracks);
+  const match = regex.exec(referenceDateForTrancheOfTracks);
   const monthOfNewestAddedTrack = Number(match[2] - 1);
   const yearOfNewestAddedTrack = Number(match[1] - 1);
 
@@ -166,7 +163,7 @@ async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
   const monthName = monthNames[monthOfNewestAddedTrack];
 
   // monthAndYearOfNewTrack formatted in the way so it matches how it is stored in database,
-  // this data is later compared conditionally 
+  // this data is later compared conditionally
   const monthAndYearOfNewTrack = `${monthName} ${yearOfNewestAddedTrack + 1}`;
 
   const today = new Date();
@@ -176,48 +173,51 @@ async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
   // condition checking if no playlist are stored in database
   if (playListsAsNewArray.length === 0) {
     const firstPlayList = await returnNewlyCreatedPlaylistID();
-    let spotifyPlaylistIDOnceLogged = formatPlayListInputAndBackendLog(
-      firstPlayList
-    );
-// .then is used otherwise playlist ID would not display value
+    let spotifyPlaylistIDOnceLogged =
+      formatPlayListInputAndBackendLog(firstPlayList);
+    // .then is used otherwise playlist ID would not display value
     await spotifyPlaylistIDOnceLogged.then((item) => {
       addTracksToSpotifyPlaylist(item[0], dataOfTrackAdded);
     });
 
-    // return added here to hard stop code from progressing after playlist was created 
+    // return added here to hard stop code from progressing after playlist was created
     return;
-  
   }
-  // if the month of the new un-added track matches today's month i.e if a playlist for 
-  // the given month already exists
-  if (monthOfNewestAddedTrack === theMonthRightNow) {
-    async function callPlayListsAsync() {
-      const playListsAsNewArray = [...(await returnPlayListsInDatabase())];
-// map over playlists to find the one that matches current month
-      playListsAsNewArray.map((x, i) => {
-        if (x.monthAndYearCreated === monthAndYearOfNewTrack) {
 
-          addTracksToSpotifyPlaylist(x.playlistSpotifyID, dataOfTrackAdded);
-        } else {
-          console.log("No matching playlists");
-        }
-      });
+
+// 'playlistID' outside of logic to be acessed further down in code
+  let playlistID;
+  // object deconstructs below two values, if playlist's current month/year is in database, set its playlistID
+  // value to the global scope var 'playlistID'
+  playListsAsNewArray.some(({ monthAndYearCreated, playlistSpotifyID }) => {
+    if (monthAndYearCreated === monthAndYearOfNewTrack) {
+      playlistID = playlistSpotifyID;
+      return true;
     }
-    callPlayListsAsync();
-  }
-  // if months/year is not that of an existing playlist, create a new one
-  else {
+  });
 
-    // this wll return newly create playlist unique ID
-    const unuqueSpoitifyPlaylistData = await returnNewlyCreatedPlaylistID();
-// log playlist on back end
-    let spotifyPlaylistIDOnceLogged = formatPlayListInputAndBackendLog(
-      unuqueSpoitifyPlaylistData
-    );
-// add new tracks to playlist
-    await spotifyPlaylistIDOnceLogged.then((item) => {
-      addTracksToSpotifyPlaylist(item[0], dataOfTrackAdded);
-    });
+  // if 'ifPlaylistExistsReturnID' is , it has looked at database and there are none, created a new playlist
+  // with the same month and year as the given month/year
+  if (!playlistID) {
+    // wrapped in an async function to call 'returnNewlyCreatedPlaylistID()' async
+    (async function functionToCreateNewPlaylistIfNewMonth() {
+      // this wll return newly create playlist's unique ID
+      const unuqueSpoitifyPlaylistData = await returnNewlyCreatedPlaylistID();
+      // log playlist on back end
+      let spotifyPlaylistIDOnceLogged = formatPlayListInputAndBackendLog(
+        unuqueSpoitifyPlaylistData
+      );
+      // add new tracks to playlist
+      await spotifyPlaylistIDOnceLogged.then((item) => {
+        addTracksToSpotifyPlaylist(item[0], dataOfTrackAdded);
+      });
+    })();
+
+    
+  }
+  // is playlist already exists, add new tracks to that playlist via its ID
+  if (playlistID) {
+    addTracksToSpotifyPlaylist(playlistID, dataOfTrackAdded);
   }
 }
 

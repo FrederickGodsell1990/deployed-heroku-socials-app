@@ -8,6 +8,7 @@ import {
 } from "./databaseOperations.js";
 import GoogleNewsFunction from "./GoogleNews.js";
 import PullTrackData from "./PullDataForTrackFunction.js";
+import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
 
 const { spotify_access_token } = window.localStorage;
 console.log(spotify_access_token);
@@ -71,7 +72,6 @@ const formatNewTracksAsObjectFunction = (releaseRadarTracks) => {
   });
 };
 
-
 // sends new tracks to the back end. The response will returned only those that are not already on the databse
 const sendRadarTracksToBackEndFunction = async (
   releaseRadarTracksAsSimpleObject
@@ -101,7 +101,10 @@ const sendRadarTracksToBackEndFunction = async (
 };
 
 // function to remove call back end to remove single track from database. Seperate for testing
-const functionToRemoveSingleTrackfromDatabase = async (trackSpotifyID, dateAdded) => {
+const functionToRemoveSingleTrackfromDatabase = async (
+  trackSpotifyID,
+  dateAdded
+) => {
   const config = {
     Key: "Content-Type",
     Value: "application/json",
@@ -115,11 +118,12 @@ const functionToRemoveSingleTrackfromDatabase = async (trackSpotifyID, dateAdded
     // post requst to server with body containing info on which track to mark as removed
     axios.post("/remove_single_track_from_database", body, config);
 
-    return (trackSpotifyID, dateAdded)
+    return trackSpotifyID, dateAdded;
   } catch (error) {
     console.log(error);
   }
-}
+};
+
 
 
 const ReleaseRadarFunction = () => {
@@ -127,7 +131,7 @@ const ReleaseRadarFunction = () => {
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
   const [moreInfo, setMoreInfo] = useState([]);
-
+  const [artistSpotifyID, setArtistSpotifyID] = useState([]);
   
   // function to call global scope function from requesting release radar playlist to passing to the back end
   // and setting  ReleaseRadarFunction's state with new, unadded tracks
@@ -138,12 +142,12 @@ const ReleaseRadarFunction = () => {
     const releaseRadarTracks =
       awaitReleaseRaderAPICallFunction.data.tracks.items;
 
-      // calls 'formatNewTracksAsObjectFunction' with new tracks
+    // calls 'formatNewTracksAsObjectFunction' with new tracks
     const releaseRadarTracksAsSimpleObject =
       formatNewTracksAsObjectFunction(releaseRadarTracks);
 
-      // calls 'sendRadarTracksToBackEndFunction' with correctly formatted track data and returns relevent tracks 
-      // as an array
+    // calls 'sendRadarTracksToBackEndFunction' with correctly formatted track data and returns relevent tracks
+    // as an array
     const newTracksReturned = await sendRadarTracksToBackEndFunction(
       releaseRadarTracksAsSimpleObject
     );
@@ -155,23 +159,21 @@ const ReleaseRadarFunction = () => {
   // call the global function (that call the back end) and updates the components state so 'arrayOfNewTracksState'
   // removes those selected to be removed
   const removeSingleTrackfromDatabase = async (trackSpotifyID, dateAdded) => {
-
     // sends call to back end to mark track as removed
-    functionToRemoveSingleTrackfromDatabase(trackSpotifyID, dateAdded)
-  // maps over each new track, if removable tack re-set 'arrayOfNewTracksState' with a spliced array with the given track reomved
-  arrayOfNewTracksState.forEach((item, index) => {
-    const nestedArray = [...item];
-    if (nestedArray[2] === trackSpotifyID) {
-      // new array created so that react will recognise the new values and re-render
-      const updatedArray = [...arrayOfNewTracksState];
-      updatedArray.splice(index, 1);
+    functionToRemoveSingleTrackfromDatabase(trackSpotifyID, dateAdded);
+    // maps over each new track, if removable tack re-set 'arrayOfNewTracksState' with a spliced array with the given track reomved
+    arrayOfNewTracksState.forEach((item, index) => {
+      const nestedArray = [...item];
+      if (nestedArray[2] === trackSpotifyID) {
+        // new array created so that react will recognise the new values and re-render
+        const updatedArray = [...arrayOfNewTracksState];
+        updatedArray.splice(index, 1);
 
-      setArrayOfNewTracksState(updatedArray);
-    }
-  });
+        setArrayOfNewTracksState(updatedArray);
+      }
+    });
+  };
 
-  }
-  
   // after playlist is added, this resets 'arrayOfNewTracksState' to nothing
   const setNewTracksArrayToBlankArray = () => {
     setArrayOfNewTracksState([]);
@@ -179,6 +181,9 @@ const ReleaseRadarFunction = () => {
   const addIDsToMoreInfo = (SpotID) => {
     setMoreInfo([...moreInfo, SpotID]);
   };
+
+
+
 
   return (
     <React.Fragment>
@@ -209,7 +214,9 @@ const ReleaseRadarFunction = () => {
             const album = x[4];
             const albumReleaseDate = x[5];
             const albumImage = x[6];
-            const artistOrArtistsAsArray = x[0]?.split(',')
+            
+           
+          
 
             return (
               <React.Fragment key={i}>
@@ -230,8 +237,10 @@ const ReleaseRadarFunction = () => {
                   More info about release?
                 </button>
                 <br />
-                {moreInfo.map((item, index) => {
+                { moreInfo.map((item, index) => {
+                
                   return item === trackSpotifyID ? (
+               
                     <React.Fragment key={index}>
                       <br />
                       <PullTrackData artist={artist} track={track} />
@@ -240,11 +249,14 @@ const ReleaseRadarFunction = () => {
                       Album release date : {albumReleaseDate}
                       <br />
                       Album cover image : {albumImage}
+                    
+                
                     </React.Fragment>
                   ) : (
                     <React.Fragment key={index}></React.Fragment>
                   );
-                })}
+                })
+                }
               </React.Fragment>
             );
           })}

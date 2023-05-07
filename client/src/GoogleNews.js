@@ -1,10 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
 
 function GoogleNewsFunction(dataFromParent) {
   const [newsState, setNewsState] = useState("");
+  const [artistToPassToChild, setArtistToPassToChild] = useState('')
+  
 
   useEffect(() => {
+const {artist} = dataFromParent;
+
+console.log(artist)
+    setArtistToPassToChild(artist)
+
 // handles formatting to make it accepted for query params
     function regexToReplaceSpaceWithPlusSign(text) {
       return text.replace(/[\s&]+/g, "+");
@@ -47,7 +55,11 @@ function GoogleNewsFunction(dataFromParent) {
 
   
   return newsState ? (
+    <div>
     <div>Arist's top news artile: {newsState} </div>
+    <ArtistSpotifyIDFormatFunction artistName={artistToPassToChild}/>
+    </div>
+
   ) : (
     <div>No news articles</div>
   );
