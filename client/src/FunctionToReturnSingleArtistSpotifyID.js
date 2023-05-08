@@ -6,7 +6,7 @@ let spotify_access_token;
 
 if (process.env.NODE_ENV === "development") {
   spotify_access_token =
-    "BQDkL6iK2Zi4oaqoeJL6WNqop9NpVcJFcGAuxUWoc6vxG9jpHs_3OFmAnbNbiTX1TbSRMU59OgtMUMzPF1KzrDJ47lRDkvqZ7Dhrn24AGs7c7USNea8T5vvxCCytX-N8aImsg-MYexExMJLYwkqYmpVJBm0d87rl1xqFKCpMRnRR2c5ZYC9kU0_3uULdg5rNxqHJTFX_sHOGMM2LTgJhp1639pHXPELj-piFThdiCzhF-uyR2pxCI6r2btFfliZH5MEMwgclK5MqIUzcqSmEwVPvzM4Ii4o";
+    "BQCLaQp62ht9WHPZ_QtVQAwPdqGbhgBo_ye2A7Ux9UPGoNVX2pUTMFC1AJvzVoZ_NRAXOI0L3kv3qk_IS4o74X3Y1Um4r3MXZH_h7wW4AhMATilHNROmrYtp0lnVFryB__PPu1v6G_4hKM_mgwOeFBryVAEev2LX9JUKIyIvYu72pAwdVdK_vYrV_0BJLxVtsOJOuvDxfA5CYrNKtFEmFZsQmfdWvO19WU5BU3g3AAqbbkLWfGYX1HfOMN70RKo_3KtXmCFTCDAcUZ9O2RKSvzItifsfcNc";
 } else {
   spotify_access_token = window.localStorage.spotify_access_token;
 }
@@ -39,6 +39,8 @@ function FunctionToReturnSingleArtistSpotifyID({ artistName }) {
         var spotifyArtistsImage = data.artists.items?.[0]?.images?.[0].url;
       //   var spotifyArtistsNameFormal = data.
 
+      console.log('spotifyArtistID', spotifyArtistID)
+      console.log('spotifyArtistsImage', spotifyArtistsImage)
       
       setSpotifyArtistIDAsState(spotifyArtistID)
       setSpotifyArtistsImageAsState(spotifyArtistsImage)

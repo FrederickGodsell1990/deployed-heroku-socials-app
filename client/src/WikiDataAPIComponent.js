@@ -20,7 +20,7 @@ function WikiDataAPICallFunction({ SpotID, SpotImage }) {
     wikiDataAPICallAsyncFunction(SpotID);
     setSpotifyArtistImage(SpotImage);
     console.log(SpotifyArtistImage);
-  }, []);
+  }, [SpotID, SpotImage]);
 
   async function wikiDataAPICallAsyncFunction(SpotID) {
     try {
