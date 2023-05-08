@@ -10,7 +10,7 @@ function GoogleNewsFunction(dataFromParent) {
   useEffect(() => {
 const {artist} = dataFromParent;
 
-console.log(artist)
+
     setArtistToPassToChild(artist)
 
 // handles formatting to make it accepted for query params
@@ -57,7 +57,7 @@ console.log(artist)
   return newsState ? (
     <div>
     <div>Arist's top news artile: {newsState} </div>
-    <ArtistSpotifyIDFormatFunction artistName={artistToPassToChild}/>
+
     </div>
 
   ) : (

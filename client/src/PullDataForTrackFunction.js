@@ -1,5 +1,6 @@
 import GoogleNewsFunction from "./GoogleNews.js";
 import React, { useEffect, useState } from "react";
+import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
 
 const PullTrackData = ({ artist, track }) => {
   const [artistState, setArtistState] = useState("");
@@ -10,7 +11,10 @@ const PullTrackData = ({ artist, track }) => {
     setTrackState(track);
   }, [artist, track]);
 
-  return <GoogleNewsFunction artist={artistState} track={trackState} />;
+  return <>
+   <GoogleNewsFunction artist={artistState} track={trackState} />;
+       <ArtistSpotifyIDFormatFunction artistName={artistState}/>
+   </>
 };
 
 export default PullTrackData;
