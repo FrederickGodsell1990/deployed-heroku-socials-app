@@ -56,13 +56,15 @@ const {artist} = dataFromParent;
   
   return newsState ? (
     <div>
-    <div>Arist's top news artile: {newsState} </div>
-
+      <a href={newsState}>
+    {/* <div>Arist's top news artile: {newsState} </div> */}
+  Artist's top news artile
+    </a>
     </div>
 
   ) : (
     <div>No news articles</div>
-  );
+  )
 }
 
 export default GoogleNewsFunction;

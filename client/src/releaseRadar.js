@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { GoToProfileButton } from "./styling/ComponentStyles.js";
+import {
+  GoToProfileButton,
+  ReleaseRadarCoverArtImage,
+  OuterDivForArrayOfNewTracksState,
+  AlbumNameAndReleaseDateFlexBox,
+  MoreInfoFlexBox
+} from "./styling/ComponentStyles.js";
 import {
   addToOrCreatePlaylistFunction,
   TextCreatePlaylist,
@@ -8,7 +14,7 @@ import {
 } from "./databaseOperations.js";
 import GoogleNewsFunction from "./GoogleNews.js";
 import PullTrackData from "./PullDataForTrackFunction.js";
-import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
+import ArtistSpotifyIDFormatFunction from "./ArtistSpotifyIDFormatFunction.js";
 
 const { spotify_access_token } = window.localStorage;
 console.log(spotify_access_token);
@@ -124,15 +130,13 @@ const functionToRemoveSingleTrackfromDatabase = async (
   }
 };
 
-
-
 const ReleaseRadarFunction = () => {
   const [tracksObject, setTracksObject] = useState("");
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
   const [moreInfo, setMoreInfo] = useState([]);
   const [artistSpotifyID, setArtistSpotifyID] = useState([]);
-  
+
   // function to call global scope function from requesting release radar playlist to passing to the back end
   // and setting  ReleaseRadarFunction's state with new, unadded tracks
   const getReleaseRadarPlaylist = async () => {
@@ -178,12 +182,10 @@ const ReleaseRadarFunction = () => {
   const setNewTracksArrayToBlankArray = () => {
     setArrayOfNewTracksState([]);
   };
+
   const addIDsToMoreInfo = (SpotID) => {
     setMoreInfo([...moreInfo, SpotID]);
   };
-
-
-
 
   return (
     <React.Fragment>
@@ -214,49 +216,71 @@ const ReleaseRadarFunction = () => {
             const album = x[4];
             const albumReleaseDate = x[5];
             const albumImage = x[6];
-            
-           
-          
 
             return (
               <React.Fragment key={i}>
-                <br />
-                {track} by {artist} added + trackSpotifyID is {trackSpotifyID}
-                <button
-                  onClick={() =>
-                    removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)
-                  }
-                >
-                  Remove
-                </button>
-                <br />
-                {/* More info? button logs trackID to local components state, which is an array
-                , the code then maps over that array to only render the <PullTrackData /> 
-                function for IDs in that array   */}
-                <button onClick={() => addIDsToMoreInfo(trackSpotifyID)}>
-                  More info about release?
-                </button>
-                <br />
-                { moreInfo.map((item, index) => {
-                
+                <OuterDivForArrayOfNewTracksState>
+                  <iframe
+                    style={{ borderRadius: "12px" }}
+                    title={trackSpotifyID}
+                    src={`https://open.spotify.com/embed/track/${trackSpotifyID}?utm_source=generator`}
+                    width="80%"
+                    height="250"
+                    frameBorder="0"
+                    allowFullScreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  ></iframe>
+
+                  <br />
+
+                  <div>
+                    <button
+                      onClick={() =>
+                        removeSingleTrackfromDatabase(trackSpotifyID, dateAdded)
+                      }
+                    >
+                      Remove
+                    </button>
+                    <br />
+                    {/* conditional render of more info button to only disply if the track ID is not within the 
+  'moreInfo array   */}
+
+                    {(moreInfo.length === 0 ||
+                      !moreInfo.includes(trackSpotifyID)) && (
+                      <button
+                        onClick={() => {
+                          addIDsToMoreInfo(trackSpotifyID);
+                        }}
+                      >
+                        More info?
+                      </button>
+                    )}
+                  </div>
+                </OuterDivForArrayOfNewTracksState>
+                <MoreInfoFlexBox>
+                {moreInfo.map((item, index) => {
                   return item === trackSpotifyID ? (
-               
                     <React.Fragment key={index}>
                       <br />
+
+                      <AlbumNameAndReleaseDateFlexBox>
+                        Album name : {album}
+                        <br />
+                        <br />
+                        Album release date : {albumReleaseDate}
+                        <br />
+                        <br />
+                      </AlbumNameAndReleaseDateFlexBox>
+
                       <PullTrackData artist={artist} track={track} />
-                      Album name : {album}
-                      <br />
-                      Album release date : {albumReleaseDate}
-                      <br />
-                      Album cover image : {albumImage}
-                    
-                
                     </React.Fragment>
                   ) : (
                     <React.Fragment key={index}></React.Fragment>
                   );
-                })
-                }
+                })}
+                </MoreInfoFlexBox>
+                <br />
               </React.Fragment>
             );
           })}

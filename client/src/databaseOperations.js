@@ -4,7 +4,7 @@ let spotify_access_token;
 
 if (process.env.NODE_ENV === "development") {
   spotify_access_token =
-    "BQCLaQp62ht9WHPZ_QtVQAwPdqGbhgBo_ye2A7Ux9UPGoNVX2pUTMFC1AJvzVoZ_NRAXOI0L3kv3qk_IS4o74X3Y1Um4r3MXZH_h7wW4AhMATilHNROmrYtp0lnVFryB__PPu1v6G_4hKM_mgwOeFBryVAEev2LX9JUKIyIvYu72pAwdVdK_vYrV_0BJLxVtsOJOuvDxfA5CYrNKtFEmFZsQmfdWvO19WU5BU3g3AAqbbkLWfGYX1HfOMN70RKo_3KtXmCFTCDAcUZ9O2RKSvzItifsfcNc";
+    "BQBAI0Y6EBrhXRQWpJ-Lm-Me5CMrpnK98eAcGXSoBFJmlEs9YP0JeJTTAKKPXXv-6ynodNEf34nNbvuKppbxivedkPWYQJQlxpGOxuqAazSk-W4eLjMQ9WZR24P2_XUIv1hpkws-LNRcaHNv2XKErjAdRXfX3aHOGDEN4rhXL0ECQo6iq62_RKB2zYxKu7McspMPpvngzJ6SrBjmE9sIUbPK3Ex3283UTZxHu0c8zKOPDGNsMuxbg89OWSfMWPY_E2_y3zyruhnDoAdMZ_Ud8Om49zZ-qak";
 } else {
   spotify_access_token = window.localStorage.spotify_access_token;
 }
