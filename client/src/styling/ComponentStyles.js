@@ -83,6 +83,7 @@ export const OuterDivForArrayOfNewTracksState = styled.div`
   justify-content: space-between;
   align-self: stretch;
   padding: 4%;
+ 
 
   button {
     margin-left : 90px;
@@ -95,18 +96,27 @@ export const OuterDivForArrayOfNewTracksState = styled.div`
 export const MoreInfoFlexBox = styled.div`
 display: flex;
 background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
+border-radius: 14px;
+padding : 10px;
+
 `;
 
 
-
-
-
-export const ArtistSocialsFlexBox = styled.div`
-display: flex;
-  flex-direction: row;
+export const SubtitleH2 = styled.div`
+  font-weight: bold;
+  color: #fff;
 `;
+
+
 
 export const AlbumNameAndReleaseDateFlexBox = styled.div`
 display: flex;
   flex-direction: column;
+`;
+
+export const AlbumNameAndReleaseDateWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
 `;

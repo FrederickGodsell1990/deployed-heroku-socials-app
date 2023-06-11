@@ -5,7 +5,9 @@ import {
   ReleaseRadarCoverArtImage,
   OuterDivForArrayOfNewTracksState,
   AlbumNameAndReleaseDateFlexBox,
-  MoreInfoFlexBox
+  MoreInfoFlexBox,
+  SubtitleH2,
+  AlbumNameAndReleaseDateWrapper,
 } from "./styling/ComponentStyles.js";
 import {
   addToOrCreatePlaylistFunction,
@@ -15,6 +17,8 @@ import {
 import GoogleNewsFunction from "./GoogleNews.js";
 import PullTrackData from "./PullDataForTrackFunction.js";
 import ArtistSpotifyIDFormatFunction from "./ArtistSpotifyIDFormatFunction.js";
+
+
 
 const { spotify_access_token } = window.localStorage;
 console.log(spotify_access_token);
@@ -187,11 +191,17 @@ const ReleaseRadarFunction = () => {
     setMoreInfo([...moreInfo, SpotID]);
   };
 
+  const scriptElement = document.getElementById('background-color');
+  
+ 
+  
+
   return (
     <React.Fragment>
+   
       {tracksObject && tracksObject.map((x) => x.artist)}
       <button onClick={getReleaseRadarPlaylist}>Get Release Radar data</button>
-
+      
       {releaseRaderObject &&
         releaseRaderObject.map((x) => {
           return (
@@ -217,23 +227,27 @@ const ReleaseRadarFunction = () => {
             const albumReleaseDate = x[5];
             const albumImage = x[6];
 
+           
+
             return (
               <React.Fragment key={i}>
                 <OuterDivForArrayOfNewTracksState>
-                  <iframe
-                    style={{ borderRadius: "12px" }}
-                    title={trackSpotifyID}
-                    src={`https://open.spotify.com/embed/track/${trackSpotifyID}?utm_source=generator`}
-                    width="80%"
-                    height="250"
-                    frameBorder="0"
-                    allowFullScreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                  ></iframe>
-
+                  
+                    <iframe
+                      style={{ borderRadius: "12px", backgroundColor: 'rgb(119, 119, 119)'  }}
+                      title={trackSpotifyID}
+                      src={`https://open.spotify.com/embed/track/${trackSpotifyID}?utm_source=generator`}
+                      width="80%"
+                      height="250"
+                      frameBorder="0"
+                      allowFullScreen=""
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                      loading="lazy"
+                    ></iframe>
+                  
                   <br />
-
+            {console.log('scriptElement',scriptElement)}
+                 
                   <div>
                     <button
                       onClick={() =>
@@ -251,34 +265,40 @@ const ReleaseRadarFunction = () => {
                       <button
                         onClick={() => {
                           addIDsToMoreInfo(trackSpotifyID);
+                      
                         }}
                       >
                         More info?
                       </button>
                     )}
+                    
                   </div>
                 </OuterDivForArrayOfNewTracksState>
                 <MoreInfoFlexBox>
-                {moreInfo.map((item, index) => {
-                  return item === trackSpotifyID ? (
-                    <React.Fragment key={index}>
-                      <br />
+                  {moreInfo.map((item, index) => {
+                    return item === trackSpotifyID ? (
+                      <React.Fragment key={index}>
+                        <br />
 
-                      <AlbumNameAndReleaseDateFlexBox>
-                        Album name : {album}
-                        <br />
-                        <br />
-                        Album release date : {albumReleaseDate}
-                        <br />
-                        <br />
-                      </AlbumNameAndReleaseDateFlexBox>
+                        <AlbumNameAndReleaseDateFlexBox>
+                          <AlbumNameAndReleaseDateWrapper>
+                            <SubtitleH2 class="div1">
+                              Album name &nbsp;
+                            </SubtitleH2>{" "}
+                            <div class="div2"> :&nbsp; {album} </div>
+                          </AlbumNameAndReleaseDateWrapper>
+                          <AlbumNameAndReleaseDateWrapper>
+                            <SubtitleH2>Album release date &nbsp;</SubtitleH2>{" "}
+                            <div> :&nbsp; {albumReleaseDate} </div>
+                          </AlbumNameAndReleaseDateWrapper>
 
-                      <PullTrackData artist={artist} track={track} />
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment key={index}></React.Fragment>
-                  );
-                })}
+                          <PullTrackData artist={artist} track={track} />
+                        </AlbumNameAndReleaseDateFlexBox>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment key={index}></React.Fragment>
+                    );
+                  })}
                 </MoreInfoFlexBox>
                 <br />
               </React.Fragment>

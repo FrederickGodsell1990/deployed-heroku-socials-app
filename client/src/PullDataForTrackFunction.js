@@ -2,7 +2,8 @@ import GoogleNewsFunction from "./GoogleNews.js";
 import React, { useEffect, useState } from "react";
 import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
 import {
-  ArtistSocialsFlexBox
+ AlbumNameAndReleaseDateWrapper,
+ SubtitleH2
 } from "./styling/ComponentStyles.js";
 
 const PullTrackData = ({ artist, track }) => {
@@ -15,11 +16,16 @@ const PullTrackData = ({ artist, track }) => {
   }, [artist, track]);
 
   return <>
-   <GoogleNewsFunction artist={artistState} track={trackState} />;
-   <div> Artist Socials </div>
-   <ArtistSocialsFlexBox>
+   <AlbumNameAndReleaseDateWrapper>
+   <SubtitleH2>News &nbsp;</SubtitleH2> : &nbsp;
+   <GoogleNewsFunction artist={artistState} track={trackState} />
+   </AlbumNameAndReleaseDateWrapper>
+   <AlbumNameAndReleaseDateWrapper>
+   <SubtitleH2> Artist Socials </SubtitleH2> : &nbsp;
        <ArtistSpotifyIDFormatFunction artistName={artistState}/>
-       </ArtistSocialsFlexBox>
+       </AlbumNameAndReleaseDateWrapper>
+   
+       
    </>
 };
 

@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import {
-  GoToProfileButton
-} from "./styling/ComponentStyles.js";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { GoToProfileButton } from "./styling/ComponentStyles.js";
+import axios from "axios";
+import RenderPlaylist from "./RenderPlaylist.js";
+
+const { spotify_access_token } = window.localStorage;
+
+const getPlaylistsFromDatabase = async () => {
+  const allPlaylistAPICall = await axios.get("/get_playlists");
+  // returns an array with all playlists in database
+  return allPlaylistAPICall.data.playlists;
+};
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -20,17 +27,67 @@ const Profile = () => {
     navigate("/release_radar");
   };
 
- 
+  const [playlistsAsState, setPlaylistsAsState] = useState([]);
+
+  // calls 'getPlaylistsFromDatabase' when page first renders. Sets 'playlistData' to state with the data returned
+  useEffect(() => {
+    (async function getAllPlaylists() {
+      const playlistData = await getPlaylistsFromDatabase();
+
+      setPlaylistsAsState(playlistData.reverse());
+    })();
+  }, []);
 
 
+// takes 'playlistsAsState' array and creates a new array with the selected playlist to the first value of the new array
+  const reArrangePlaylistArrayOrder = (index, array) => {
+    const arrayAsNewVariable = [...array];
+    const newlySplicedArray = arrayAsNewVariable.splice(index, 1);
+    const newlyOrderedArray = [...newlySplicedArray, ...arrayAsNewVariable];
+    setPlaylistsAsState(newlyOrderedArray);
+  };
 
-  
   return (
-    <React.Fragment >
-    <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
-    <button onClick={functionToFavouriteArtists}>Go to Favourite Artsist's Page</button>
-    <button onClick={functionToMongoDBFunction}>Go to MongoDB Page - stashed changes the third time</button>
-  </React.Fragment>
+    <React.Fragment>
+      <button onClick={functionToArtistSearch}>Go to Artist Search Page</button>
+      <button onClick={functionToFavouriteArtists}>
+        Go to Favourite Artsist's Page
+      </button>
+      <button onClick={functionToMongoDBFunction}>
+        Go to MongoDB Page - stashed changes the third time
+      </button>
+      <button onClick={getPlaylistsFromDatabase}>Get playlists</button>
+
+      {playlistsAsState &&
+        playlistsAsState
+          .slice(0, 1)
+          .map(({ monthAndYearCreated, playlistSpotifyID }) => {
+            return (
+              <RenderPlaylist
+                key={playlistSpotifyID}
+                monthAndYearCreated={monthAndYearCreated}
+                playlistSpotifyID={playlistSpotifyID}
+              />
+            );
+          })}
+
+      {playlistsAsState &&
+        playlistsAsState.map(
+          ({ playlistSpotifyID, monthAndYearCreated }, index, array) => {
+           
+            return (
+              <React.Fragment key={playlistSpotifyID}>
+                <div>{monthAndYearCreated}</div>
+                <button
+                  onClick={() => reArrangePlaylistArrayOrder(index, array)}
+                >
+                  Switch
+                </button>
+              </React.Fragment>
+            );
+          }
+        )}
+    </React.Fragment>
   );
 };
 

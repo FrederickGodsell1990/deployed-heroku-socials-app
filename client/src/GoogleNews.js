@@ -58,7 +58,7 @@ const {artist} = dataFromParent;
     <div>
       <a href={newsState}>
     {/* <div>Arist's top news artile: {newsState} </div> */}
-  Artist's top news artile
+  Artist's top news article
     </a>
     </div>
 

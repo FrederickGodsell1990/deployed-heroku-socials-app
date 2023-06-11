@@ -20,6 +20,7 @@ import GoogleNewsFunction from "./GoogleNews";
 
 
 
+
 function App() {
   const [token, setToken] = useState(null);
   const [dummyVar, dummyFunction] = useState(null);
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/artist_search" element={<ArtistSearch />}></Route>
                 <Route path="/favourite_artists" element={<FavouriteArtistsFunction />}></Route>
                 <Route path="/release_radar" element={<ReleaseRadarFunction />}></Route>
+          
                
               </Routes>
             </Router>
