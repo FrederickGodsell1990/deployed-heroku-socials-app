@@ -1,6 +1,5 @@
 import styled from "styled-components/macro";
 
-
 export const LogOutButtonRight = styled.button`
   position: fixed;
   top: 10px;
@@ -16,7 +15,7 @@ export const GoToProfileButton = styled.button`
 export const ImageSize = styled.img`
   width: 150px;
   height: 150px;
-  padding : 6px;
+  padding: 6px;
 `;
 
 export const ImagesLeftToRight = styled.div`
@@ -24,25 +23,24 @@ export const ImagesLeftToRight = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  
 `;
 
 export const WikiDataTextSize = styled.p`
-font-size: 14px;
+  font-size: 14px;
 `;
 
 export const WikiDataNoFileTextFormat = styled.p`
-font-size: 10px;
-colour: grey;
-margin : 4px;
+  font-size: 10px;
+  colour: grey;
+  margin: 4px;
 `;
 
 export const SocialIconStyling = styled.div`
-justify-content: center;
+  justify-content: center;
 `;
 
 export const SingleSocialIconStyling = styled.span`
-padding: 07px;
+  padding: 07px;
 `;
 
 // export const OuterDivForArrayOfNewTracksState = styled.div`
@@ -59,7 +57,7 @@ padding: 07px;
 //     height: 130px;
 //     padding: 6px;
 //   }
-  
+
 //   > div {
 //     width: 180%;
 //     display: flex;
@@ -75,48 +73,89 @@ padding: 07px;
 //   }
 // `;
 
-
-
 export const OuterDivForArrayOfNewTracksState = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   align-self: stretch;
   padding: 4%;
- 
 
   button {
-    margin-left : 90px;
-    width : 120px;
+    margin-left: 90px;
+    width: 120px;
   }
-
 `;
-
 
 export const MoreInfoFlexBox = styled.div`
-display: flex;
-background-color: rgb(119, 119, 119);
-font-family: 'Poppins', sans-serif;
-border-radius: 14px;
-padding : 10px;
-
+  display: flex;
+  background-color: rgb(119, 119, 119);
+  font-family: "Poppins", sans-serif;
+  border-radius: 14px;
+  padding: 10px;
 `;
-
 
 export const SubtitleH2 = styled.div`
   font-weight: bold;
   color: #fff;
 `;
 
-
-
 export const AlbumNameAndReleaseDateFlexBox = styled.div`
-display: flex;
+  display: flex;
   flex-direction: column;
 `;
 
 export const AlbumNameAndReleaseDateWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
 `;
+
+export const SocialsFlexBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const ActivePlaylistFlexbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+  background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
+border-radius: 14px;
+padding : 10px;
+
+
+}
+`;
+
+export const PlaylistSingleLineFlexbox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  button {
+    opacity: 0.5;
+  }
+`;
+
+export const ActivePlaylistTitle = styled.h1`
+  display: flex;
+  flex-direction: column;
+  
+  background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
+border-radius: 14px;
+padding : 10px;
+
+
+}
+`;
+
+export const NavigationBar = styled.span`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+width: 100%;
+padding : 40px;
+`

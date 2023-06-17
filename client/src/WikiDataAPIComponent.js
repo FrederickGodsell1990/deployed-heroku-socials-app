@@ -8,8 +8,7 @@ import {
 } from "react-icons/ri";
 import {
   WikiDataNoFileTextFormat,
-  SocialIconStyling,
-  SingleSocialIconStyling
+  SocialsFlexBox,
 } from "./styling/ComponentStyles.js";
 
 function WikiDataAPICallFunction({ SpotID, SpotImage }) {
@@ -43,7 +42,7 @@ function WikiDataAPICallFunction({ SpotID, SpotImage }) {
   return (
     <>
       <div>
-        {wikiDataArtistQCode != "" ? (
+        {wikiDataArtistQCode ? (
           <SetSocialStatesComponent QCode={wikiDataArtistQCode} />
         ) : (
           <WikiDataNoFileTextFormat>No WikiData file</WikiDataNoFileTextFormat>
@@ -97,156 +96,33 @@ function SetSocialStatesComponent({ QCode }) {
 
   return (
     <>
-      {twitterURL == undefined ? (
-        <WikiDataNoFileTextFormat>No Twitter profile </WikiDataNoFileTextFormat>
-      ) : (
-        <TwitterComponent TwitURL={`https://twitter.com/${twitterURL}`} />
-      )}
+      <SocialsFlexBox>
+        {twitterURL && (
+          <a href={`https://twitter.com/${twitterURL}`}>
+            <RiTwitterFill />
+          </a>
+        )}
 
-      {instagramURL == undefined ? (
-        <WikiDataNoFileTextFormat>
-          No Instgram profile{" "}
-        </WikiDataNoFileTextFormat>
-      ) : (
-        <InstagramComponent
-          instaURL={`https://www.instagram.com/${instagramURL}`}
-        />
-      )}
-
-      {youTubeURL == undefined ? (
-        <WikiDataNoFileTextFormat>No YouTube profile</WikiDataNoFileTextFormat>
-      ) : (
-        <YoutubeComponent
-          TubeURL={`https://www.youtube.com/channel/${youTubeURL}`}
-        />
-      )}
-
-      {soundCloudURL == undefined ? (
-        <WikiDataNoFileTextFormat>
-          No SoundCloud profile
-        </WikiDataNoFileTextFormat>
-      ) : (
-        <SoundcloudComponent
-          CloudURL={`https://soundcloud.com/${soundCloudURL}`}
-        />
-      )}
-    </>
-  );
-}
-
-export function InstagramComponent({ instaURL }) {
-  return (
-    <>
-      {" "}
-      {instaURL ? (
-        
-          <SocialIconStyling>
-            <span>
-              <SingleSocialIconStyling>
+        {instagramURL && (
+          <a href={`https://www.instagram.com/${instagramURL}`}>
             <RiInstagramLine />
-            </SingleSocialIconStyling>
-            </span>
-            <span>
-            <a href={instaURL}>{"Instagram"}</a>
-            </span>
-          </SocialIconStyling>
-       
-      ) : (
-        <SocialIconStyling>
-          <RiInstagramLine />
-          No Instagram record
-          </SocialIconStyling>
-      )}
+          </a>
+        )}
+
+        {youTubeURL && (
+          <a href={`https://www.youtube.com/channel/${youTubeURL}`}>
+            <RiYoutubeFill />
+          </a>
+        )}
+
+        {soundCloudURL && (
+          <a href={`https://soundcloud.com/${soundCloudURL}`}>
+            <RiSoundcloudFill />
+          </a>
+        )}
+      </SocialsFlexBox>
     </>
   );
 }
-
-
-
-
-
-export function TwitterComponent({ TwitURL }) {
-  return (
-    <>
-      {" "}
-      {TwitURL ? (
-        
-          <SocialIconStyling>
-            <span>
-              <SingleSocialIconStyling>
-              <RiTwitterFill />
-            </SingleSocialIconStyling>
-            </span>
-            <span>
-            <a href={TwitURL}>{"Twitter"}</a>
-            </span>
-          </SocialIconStyling>
-       
-      ) : (
-        <SocialIconStyling>
-          <RiTwitterFill />
-          No Twitter record
-          </SocialIconStyling>
-      )}
-    </>
-  );
-}
-
-
-export function YoutubeComponent({ TubeURL }) {
-  return (
-    <>
-      {" "}
-      {TubeURL ? (
-        
-          <SocialIconStyling>
-            <span>
-              <SingleSocialIconStyling>
-              <RiYoutubeFill />
-            </SingleSocialIconStyling>
-            </span>
-            <span>
-            <a href={TubeURL}>{"YouTube"}</a>
-            </span>
-          </SocialIconStyling>
-       
-      ) : (
-        <SocialIconStyling>
-                  <RiYoutubeFill />
-          No YouTube record
-          </SocialIconStyling>
-      )}
-    </>
-  );
-}
-
-
-export function SoundcloudComponent({ CloudURL }) {
-  return (
-    <>
-      {" "}
-      {CloudURL ? (
-        
-          <SocialIconStyling>
-            <span>
-              <SingleSocialIconStyling>
-              <RiSoundcloudFill />
-            </SingleSocialIconStyling>
-            </span>
-            <span>
-            <a href={CloudURL}>{"Soundcloud"}</a>
-            </span>
-          </SocialIconStyling>
-       
-      ) : (
-        <SocialIconStyling>
-                  <RiSoundcloudFill />
-          No SoundCloud record
-          </SocialIconStyling>
-      )}
-    </>
-  );
-}
-
 
 export default WikiDataAPICallFunction;

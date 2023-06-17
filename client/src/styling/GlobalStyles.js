@@ -6,6 +6,20 @@ const GlobalStyle = createGlobalStyle`
   ${variables};
 
  
+  p, span {
+    /* Apply your text styles here */
+    color: rgb(255,255,255);
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+h1, h2, h3, h4, h5, h6 {
+    /* Apply your text styles here */
+    font-weight: bold;
+    color: rgb(255,255,255);
+  ;
+    font-family: 'Poppins', sans-serif;
+  }
 
 
   body {
@@ -19,8 +33,9 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
    border : 0;
     border-radius: var(--border-radius-pill);
-    background-color: rgba(0,0,0,1);
-    color: var(--white);
+    color: #fff;
+    background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
     padding: var(--spacing-xs) var(--spacing-sm);
 
  

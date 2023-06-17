@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FunctionToReturnSingleArtistSpotifyID from "./FunctionToReturnSingleArtistSpotifyID.js";
-import {
-  MoreInfoDivForArrayOfNewTracksState
-  
-} from "./styling/ComponentStyles.js";
+import { MoreInfoDivForArrayOfNewTracksState } from "./styling/ComponentStyles.js";
 
 const ArtistSpotifyIDFormatFunction = ({ artistName }) => {
   const [aristOrArtists, setAristOrArtists] = useState([]);
@@ -18,13 +15,7 @@ const ArtistSpotifyIDFormatFunction = ({ artistName }) => {
     aristOrArtists &&
     aristOrArtists.map((item) => {
       return (
-        <React.Fragment key={item}>
-          <div>
-          {item}
-          
-          <FunctionToReturnSingleArtistSpotifyID artistName={item} />
-          </div>
-        </React.Fragment>
+        <FunctionToReturnSingleArtistSpotifyID key={item} artistName={item} />
       );
     })
   );

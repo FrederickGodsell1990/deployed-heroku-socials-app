@@ -17,12 +17,16 @@ const PullTrackData = ({ artist, track }) => {
 
   return <>
    <AlbumNameAndReleaseDateWrapper>
-   <SubtitleH2>News &nbsp;</SubtitleH2> : &nbsp;
+   <div>News &nbsp;</div> : &nbsp;
+   <SubtitleH2>
    <GoogleNewsFunction artist={artistState} track={trackState} />
+   </SubtitleH2>
    </AlbumNameAndReleaseDateWrapper>
    <AlbumNameAndReleaseDateWrapper>
-   <SubtitleH2> Artist Socials </SubtitleH2> : &nbsp;
+   <div> Artist Socials </div> : &nbsp;
+   <SubtitleH2>
        <ArtistSpotifyIDFormatFunction artistName={artistState}/>
+       </SubtitleH2>
        </AlbumNameAndReleaseDateWrapper>
    
        

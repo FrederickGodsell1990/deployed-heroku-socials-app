@@ -1,6 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import PlaylistTrackAsSpotifyPlayer from "./PlaylistTrackAsSpotifyPlayer.js";
+import PlaylistTracksWaitinToBeSelected from "./PlaylistTracksWaitinToBeSelected.js";
+import {
+  ActivePlaylistFlexbox,
+  PlaylistSingleLineFlexbox,
+ ActivePlaylistTitle
+} from "./styling/ComponentStyles.js";
 
 const { spotify_access_token } = window.localStorage;
 
@@ -63,14 +68,17 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
     );
   };
 
+  console.log("tracks as state", tracksAsState);
+
   return (
     <>
+    <ActivePlaylistTitle>
       <div>{nameAsState}</div>
+      </ActivePlaylistTitle>
       {/* If no track is clicked to play, the default will be the first track in the playlist, if not it will be 'trackSelectedToPlay' */}
       {!trackSelectedToPlay && tracksAsState ? (
         tracksAsState.map(({ track: { id } }, index) => {
           if (index <= 0) {
- 
             return (
               <React.Fragment key={id}>
                 {functionToReturnSpotifyPlayer(id)}
@@ -80,24 +88,45 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
           return null; // Add a return statement for the "else" case
         })
       ) : (
-        <div>
-          Selected track {functionToReturnSpotifyPlayer(trackSelectedToPlay)}
-        </div>
+        <React.Fragment >
+             
+          {functionToReturnSpotifyPlayer(trackSelectedToPlay)}
+          </React.Fragment>
+
       )}
       {/* The first five tracks in the given playlist are rendered below the spotify player */}
-      {tracksAsState &&
-        tracksAsState.map(({ track: { id } }, index) => {
-          if (index <= 5) {
-            return (
-              <React.Fragment key={id}>
-                <PlaylistTrackAsSpotifyPlayer key={id} id={id} />
-                <button onClick={() => playSelectedTrack(id)}>
-                  Play track?
-                </button>
-              </React.Fragment>
-            );
-          }
-        })}
+      <ActivePlaylistFlexbox>
+        {tracksAsState &&
+          tracksAsState.map(
+            (
+              {
+                track: {
+                  id,
+                  name: trackName,
+                  artists: [{ name: artistName }],
+                },
+              },
+              index
+            ) => {
+              if (index <= 5) {
+                return (
+                  <React.Fragment key={id}>
+                    <PlaylistSingleLineFlexbox>
+                      <PlaylistTracksWaitinToBeSelected
+                        key={id}
+                        trackName={trackName}
+                        artistName={artistName}
+                      />
+                      <button onClick={() => playSelectedTrack(id)}>
+                        Play track?
+                      </button>
+                    </PlaylistSingleLineFlexbox>
+                  </React.Fragment>
+                );
+              }
+            }
+          )}
+      </ActivePlaylistFlexbox>
     </>
   );
 }

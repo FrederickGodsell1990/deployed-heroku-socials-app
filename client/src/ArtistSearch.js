@@ -52,8 +52,11 @@ function ArtistSearch() {
       <h1>Artist Search</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input />
+        &nbsp;&nbsp;&nbsp;
         <button type={"submit"}>Search artist</button>
       </form>
+
+      
       {artistName && artistImage && spotifyID && (
         <>
           <div>
@@ -63,9 +66,11 @@ function ArtistSearch() {
             <WikiDataAPICallFunction SpotID={spotifyID} />
             </WikiDataTextSize>
           </div>
-          
+        
         </>
+        
       )}
+      
       <GoToProfileButton onClick={functionToProfile}>
         Go to Profile
       </GoToProfileButton>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   GoToProfileButton,
@@ -14,11 +15,8 @@ import {
   TextCreatePlaylist,
   addTracksToSpotifyPlaylist,
 } from "./databaseOperations.js";
-import GoogleNewsFunction from "./GoogleNews.js";
 import PullTrackData from "./PullDataForTrackFunction.js";
 import ArtistSpotifyIDFormatFunction from "./ArtistSpotifyIDFormatFunction.js";
-
-
 
 const { spotify_access_token } = window.localStorage;
 console.log(spotify_access_token);
@@ -139,7 +137,8 @@ const ReleaseRadarFunction = () => {
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
   const [moreInfo, setMoreInfo] = useState([]);
-  const [artistSpotifyID, setArtistSpotifyID] = useState([]);
+  const [getTracksButtonBeenClicked, setGetTracksButtonBeenClicked] =
+    useState(false);
 
   // function to call global scope function from requesting release radar playlist to passing to the back end
   // and setting  ReleaseRadarFunction's state with new, unadded tracks
@@ -162,6 +161,8 @@ const ReleaseRadarFunction = () => {
 
     // Sets 'ReleaseRadarFunction''s 'arrayOfNewTracksState' with only unadded tracks
     setArrayOfNewTracksState(newTracksReturned);
+// lets state know that the search release rader button has been clicked once
+    setGetTracksButtonBeenClicked(true);
   };
 
   // call the global function (that call the back end) and updates the components state so 'arrayOfNewTracksState'
@@ -191,17 +192,28 @@ const ReleaseRadarFunction = () => {
     setMoreInfo([...moreInfo, SpotID]);
   };
 
-  const scriptElement = document.getElementById('background-color');
-  
- 
-  
+  const scriptElement = document.getElementById("background-color");
+
+  const navigate = useNavigate();
+
+  const functionToProfile = () => {
+    navigate("/");
+  };
+
+
 
   return (
     <React.Fragment>
-   
-      {tracksObject && tracksObject.map((x) => x.artist)}
-      <button onClick={getReleaseRadarPlaylist}>Get Release Radar data</button>
-      
+      {/* // conditional rendering do indicate there are no new tracks once the search button has been clicked once or 
+      // all new tracks have been removed by user */}
+      {getTracksButtonBeenClicked === false && !arrayOfNewTracksState ? (
+        <button onClick={getReleaseRadarPlaylist}>Find new tracks</button>
+      ) : arrayOfNewTracksState.length === 0 && getTracksButtonBeenClicked ? (
+        <h3>No new tracks!</h3>
+      ) : (
+        ""
+      )}
+
       {releaseRaderObject &&
         releaseRaderObject.map((x) => {
           return (
@@ -227,27 +239,27 @@ const ReleaseRadarFunction = () => {
             const albumReleaseDate = x[5];
             const albumImage = x[6];
 
-           
-
             return (
               <React.Fragment key={i}>
                 <OuterDivForArrayOfNewTracksState>
-                  
-                    <iframe
-                      style={{ borderRadius: "12px", backgroundColor: 'rgb(119, 119, 119)'  }}
-                      title={trackSpotifyID}
-                      src={`https://open.spotify.com/embed/track/${trackSpotifyID}?utm_source=generator`}
-                      width="80%"
-                      height="250"
-                      frameBorder="0"
-                      allowFullScreen=""
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                    ></iframe>
-                  
+                  <iframe
+                    style={{
+                      borderRadius: "12px",
+                      backgroundColor: "rgb(119, 119, 119)",
+                    }}
+                    title={trackSpotifyID}
+                    src={`https://open.spotify.com/embed/track/${trackSpotifyID}?utm_source=generator`}
+                    width="80%"
+                    height="250"
+                    frameBorder="0"
+                    allowFullScreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  ></iframe>
+
                   <br />
-            {console.log('scriptElement',scriptElement)}
-                 
+                  {console.log("scriptElement", scriptElement)}
+
                   <div>
                     <button
                       onClick={() =>
@@ -265,13 +277,11 @@ const ReleaseRadarFunction = () => {
                       <button
                         onClick={() => {
                           addIDsToMoreInfo(trackSpotifyID);
-                      
                         }}
                       >
                         More info?
                       </button>
                     )}
-                    
                   </div>
                 </OuterDivForArrayOfNewTracksState>
                 <MoreInfoFlexBox>
@@ -282,14 +292,18 @@ const ReleaseRadarFunction = () => {
 
                         <AlbumNameAndReleaseDateFlexBox>
                           <AlbumNameAndReleaseDateWrapper>
-                            <SubtitleH2 class="div1">
-                              Album name &nbsp;
-                            </SubtitleH2>{" "}
-                            <div class="div2"> :&nbsp; {album} </div>
+                            <div class="div1">Album name &nbsp;</div>{" "}
+                            <SubtitleH2 class="div2">
+                              {" "}
+                              :&nbsp; {album}{" "}
+                            </SubtitleH2>
                           </AlbumNameAndReleaseDateWrapper>
                           <AlbumNameAndReleaseDateWrapper>
-                            <SubtitleH2>Album release date &nbsp;</SubtitleH2>{" "}
-                            <div> :&nbsp; {albumReleaseDate} </div>
+                            <div>Album release date &nbsp;</div>{" "}
+                            <SubtitleH2>
+                              {" "}
+                              :&nbsp; {albumReleaseDate}{" "}
+                            </SubtitleH2>
                           </AlbumNameAndReleaseDateWrapper>
 
                           <PullTrackData artist={artist} track={track} />
@@ -314,6 +328,10 @@ const ReleaseRadarFunction = () => {
           </button>
         </>
       )}
+
+      <GoToProfileButton onClick={functionToProfile}>
+        Go to Profile
+      </GoToProfileButton>
     </React.Fragment>
   );
 };
