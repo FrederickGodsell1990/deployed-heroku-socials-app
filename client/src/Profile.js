@@ -1,6 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { LogOutButtonRight, NavigationBar } from "./styling/ComponentStyles.js";
+import {
+  LogOutButtonRight,
+  NavigationBar,
+  DormantPlaylistFlexbox,
+  DormantPlaylistInline,
+  SubtitleH2,
+  ProfilePageFlexbox,
+} from "./styling/ComponentStyles.js";
 import axios from "axios";
 import RenderPlaylist from "./RenderPlaylist.js";
 import { logout } from "./spotify";
@@ -12,16 +19,12 @@ const getPlaylistsFromDatabase = async () => {
   return allPlaylistAPICall.data.playlists;
 };
 
-
-
-
 const Profile = () => {
-  
   const navigate = useNavigate();
 
-const functionProfile = () => {
-  navigate("/");
-};
+  const functionProfile = () => {
+    navigate("/");
+  };
 
   const functionToArtistSearch = () => {
     navigate("/artist_search");
@@ -34,8 +37,6 @@ const functionProfile = () => {
   const functionToMongoDBFunction = () => {
     navigate("/release_radar");
   };
-
-
 
   const [playlistsAsState, setPlaylistsAsState] = useState([]);
 
@@ -58,41 +59,70 @@ const functionProfile = () => {
 
   return (
     <React.Fragment>
-      {playlistsAsState &&
-        playlistsAsState
-          .slice(0, 1)
-          .map(({ monthAndYearCreated, playlistSpotifyID }) => {
-            return (
-              <RenderPlaylist
-                key={playlistSpotifyID}
-                monthAndYearCreated={monthAndYearCreated}
-                playlistSpotifyID={playlistSpotifyID}
-              />
-            );
-          })}
-      {playlistsAsState &&
-        playlistsAsState.map(
-          ({ playlistSpotifyID, monthAndYearCreated }, index, array) => {
-            return (
-              <React.Fragment key={playlistSpotifyID}>
-                <div>{monthAndYearCreated}</div>
-                <button
-                  onClick={() => reArrangePlaylistArrayOrder(index, array)}
-                >
-                  Switch
-                </button>
-              </React.Fragment>
-            );
-          }
-        )}
-      <NavigationBar>
-        <button onClick={functionToArtistSearch}>Artist Search</button>
-        <button onClick={functionToFavouriteArtists}>
-          Favourite Artsist's
-        </button>
-        <button onClick={functionToMongoDBFunction}>Release Radar</button>
-        <button onClick={logout}>Log out</button>
-      </NavigationBar>
+      <React.Fragment>
+        {playlistsAsState &&
+          playlistsAsState
+            .slice(0, 1)
+            .map(({ monthAndYearCreated, playlistSpotifyID }) => {
+              return (
+                <RenderPlaylist
+                  key={playlistSpotifyID}
+                  monthAndYearCreated={monthAndYearCreated}
+                  playlistSpotifyID={playlistSpotifyID}
+                />
+              );
+            })}
+             &nbsp;   
+            <ProfilePageFlexbox>
+        <React.Fragment>
+          <br />
+          <div>
+          <h3>Playlists</h3>
+          <DormantPlaylistFlexbox>
+            {playlistsAsState &&
+              playlistsAsState.map(
+                ({ playlistSpotifyID, monthAndYearCreated }, index, array) => {
+                  const monthAndYearCreatedSplit =
+                    monthAndYearCreated.split(" ");
+                  const month = monthAndYearCreatedSplit[0];
+                  const year = monthAndYearCreatedSplit[1];
+
+                  return (
+                    <React.Fragment key={playlistSpotifyID}>
+                      <DormantPlaylistInline>
+                        <SubtitleH2>{month} &nbsp; </SubtitleH2>
+                        <div>{year} &nbsp; </div>
+                        <button
+                          onClick={() =>
+                            reArrangePlaylistArrayOrder(index, array)
+                          }
+                        >
+                          Switch?
+                        </button>
+                      </DormantPlaylistInline>
+                      
+                    </React.Fragment>
+                  );
+                }
+              )}
+          </DormantPlaylistFlexbox>
+          </div>
+        </React.Fragment>
+        &nbsp;    &nbsp;    &nbsp;    &nbsp;
+        <div>
+        <h3>Pages & Actions</h3>
+        <NavigationBar>
+          <button onClick={functionToArtistSearch}>Artist Search</button>
+          <button onClick={functionToFavouriteArtists}>
+            Favourite Artists
+          </button>
+          <button onClick={functionToMongoDBFunction}>Release Radar</button>
+          <button onClick={logout}>Log out</button>
+        </NavigationBar>
+        </div>
+        </ProfilePageFlexbox>
+      </React.Fragment>
+      
     </React.Fragment>
   );
 };

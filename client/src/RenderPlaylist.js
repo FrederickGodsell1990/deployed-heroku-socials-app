@@ -4,7 +4,7 @@ import PlaylistTracksWaitinToBeSelected from "./PlaylistTracksWaitinToBeSelected
 import {
   ActivePlaylistFlexbox,
   PlaylistSingleLineFlexbox,
- ActivePlaylistTitle
+ ActivePlaylistTitle,
 } from "./styling/ComponentStyles.js";
 
 const { spotify_access_token } = window.localStorage;
@@ -72,9 +72,7 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
 
   return (
     <>
-    <ActivePlaylistTitle>
-      <div>{nameAsState}</div>
-      </ActivePlaylistTitle>
+     <br/>
       {/* If no track is clicked to play, the default will be the first track in the playlist, if not it will be 'trackSelectedToPlay' */}
       {!trackSelectedToPlay && tracksAsState ? (
         tracksAsState.map(({ track: { id } }, index) => {
@@ -94,6 +92,10 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
           </React.Fragment>
 
       )}
+     <br/>
+      <ActivePlaylistTitle>
+      <div>{nameAsState}</div>
+      </ActivePlaylistTitle>
       {/* The first five tracks in the given playlist are rendered below the spotify player */}
       <ActivePlaylistFlexbox>
         {tracksAsState &&

@@ -152,10 +152,67 @@ padding : 10px;
 }
 `;
 
+// export const NavigationBar = styled.span`
+// display: flex;
+// flex-direction: row;
+// justify-content: space-between;
+// width: 100%;
+// padding : 40px;
+// `
+
+
 export const NavigationBar = styled.span`
 display: flex;
-flex-direction: row;
-justify-content: space-between;
-width: 100%;
-padding : 40px;
+flex-direction: column;
+font-size: 20px;
+background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
+border-radius: 14px;
+padding : 10px;
+
+button {
+  font-weight: bold;
+  padding : 0px;
+  
+
+}
+
 `
+
+
+export const DormantPlaylistFlexbox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  
+  background-color: rgb(119, 119, 119);
+font-family: 'Poppins', sans-serif;
+border-radius: 14px;
+padding : 10px;
+
+
+}
+`;
+
+export const DormantPlaylistInline = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  button {
+    opacity: 0.5;
+    padding : 0px;
+
+  }
+  
+
+
+}
+`;
+
+export const ProfilePageFlexbox = styled.span` 
+display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 20px;
+`
+
