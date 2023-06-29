@@ -8,7 +8,7 @@ import axios from 'axios';
     timestamp: 'spotify_token_timestamp',
   }
   
-  // Map to retrieve localStorage values
+  // Map to retrieve all localStorage values
   const LOCALSTORAGE_VALUES = {
     accessToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.accessToken),
     refreshToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.refreshToken),

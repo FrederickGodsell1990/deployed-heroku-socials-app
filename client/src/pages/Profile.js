@@ -9,7 +9,7 @@ import {
 } from "../styling/ComponentStyles.js";
 import axios from "axios";
 import RenderPlaylist from "../RenderPlaylist.js";
-import { logout } from "../Spotify.js";
+import { logout } from "../spotify.js";
 
 const getPlaylistsFromDatabase = async () => {
   const allPlaylistAPICall = await axios.get("/get_playlists");
