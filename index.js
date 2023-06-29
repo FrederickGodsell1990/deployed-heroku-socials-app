@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 app.use(express.json()); // to parse incoming json
 const SingleTrack = require("./models/singleTrack.js");
 const ReleaseRadarModel = require("./models/releaseRadarSchema.js");
-const ReleaseRadarPlayListModel = require("./models/releaseRaderPlaylistSchema.js")
+const ReleaseRadarPlayListModel = require("./models/releaseRaderPlaylistSchema.js");
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -80,7 +80,7 @@ app.get("/callback", (req, res) => {
           expires_in,
         });
 
-        // res.redirect(`http://localhost:3000/?${queryParams}`);
+        
         res.redirect(`${FRONTEND_URI}/?${queryParams}`);
       } else {
         res.redirect(`/?${querystring.stringify({ error: "invalid_token" })}`);
@@ -163,9 +163,9 @@ app.post("/post_release_radar_tracks", async (req, res) => {
         trackName: x.trackName,
         trackSpotifyID: x.trackSpotifyID,
         dateAdded: x.dateAdded,
-        album : x.album,
-        albumReleaseDate : x.albumReleaseDate,
-        albumImage : x.albumImage
+        album: x.album,
+        albumReleaseDate: x.albumReleaseDate,
+        albumImage: x.albumImage,
       });
 
       try {
@@ -183,7 +183,7 @@ app.post("/post_release_radar_tracks", async (req, res) => {
             postToMongo.dateAdded,
             postToMongo.album,
             postToMongo.albumReleaseDate,
-            postToMongo.albumImage
+            postToMongo.albumImage,
           ]);
 
           return arrayOfNewTracks;
@@ -228,25 +228,24 @@ app.post("/log_playlist", async (req, res) => {
   const playlistSpotifyID = req.body.playlistSpotifyID;
   const playlistName = req.body.playlistName;
 
- // create a new Post instance
- const releaseRadarPlayListModel = new ReleaseRadarPlayListModel({
-  playlistSpotifyID: playlistSpotifyID,
-  monthAndYearCreated: monthAndYearCreated,
-  playlistName : playlistName
-});
-
-try {
-  const postPlaylist = await releaseRadarPlayListModel.save();
-  postPlaylist;
-  res.status(201).json({
-    message: "Playlist posted created successfully!",
-    postPlaylist: postPlaylist,
+  // create a new Post instance
+  const releaseRadarPlayListModel = new ReleaseRadarPlayListModel({
+    playlistSpotifyID: playlistSpotifyID,
+    monthAndYearCreated: monthAndYearCreated,
+    playlistName: playlistName,
   });
-} catch (err) {
-  console.log(err);
-}
 
-})
+  try {
+    const postPlaylist = await releaseRadarPlayListModel.save();
+    postPlaylist;
+    res.status(201).json({
+      message: "Playlist posted created successfully!",
+      postPlaylist: postPlaylist,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.get("/get_playlists", (req, res) => {
   console.log("Get playlists req received");

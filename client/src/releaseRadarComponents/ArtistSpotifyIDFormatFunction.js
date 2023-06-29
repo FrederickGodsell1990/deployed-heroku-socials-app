@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import FunctionToReturnSingleArtistSpotifyID from "./FunctionToReturnSingleArtistSpotifyID.js";
-import { MoreInfoDivForArrayOfNewTracksState } from "./styling/ComponentStyles.js";
+
 
 const ArtistSpotifyIDFormatFunction = ({ artistName }) => {
   const [aristOrArtists, setAristOrArtists] = useState([]);

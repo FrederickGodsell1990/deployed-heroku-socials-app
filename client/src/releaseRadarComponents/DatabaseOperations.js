@@ -4,7 +4,7 @@ let spotify_access_token;
 
 if (process.env.NODE_ENV === "development") {
   spotify_access_token =
-    "BQC4fMZ8h8HbeoL8V4UZzLO9x6mev4xSRep72dkZ3YxutV-QzR4IpGD8qCVnAft5FYo4yOnG_ECKStTs24QvzgUjfWIA9KAb0nxJ_Kv8zDi3qJFNhaQ1wwc3PCTieug1VaQDcmftnSRsbbM-p0imzn7Pc_LwiEAzfTz00I9vQwMrVoPYD6csAQa_-ptRePANXwI4LAXmFJTHsp7CJPzLkdpz8X5Mog_LRejDkeRno2RKP33-YCxy6P9_E5R034kXZwHMO_Rz4NJYxAsGAKXfkDN9T1VZJg";
+    "BQBfDoYsyV_gQvsjfJv-lZB15RIttQtmxHmQistFSbMpLJWTlJONYqscQRv9d_tG4R1C2F5ST8i60WhT8rDpREDeE6oSjMgXZFuuiWWR6b0otuHCPzv7nCiPhjoSA6m9JeECWAOMF81TLXZoSlUorcohArxNmTDvYfSTZyPHHRPlkYPogudqA4tbuGkV0Jq43iIgTOn7A5MkqRQOFzKFSzY6DXhC3XcuSBqQjabCcs9hzmwqBXdyrs_IQEgD1dsheqbydKvuzdRa2i4V1WXojDhCUH106w";
 } else {
   spotify_access_token = window.localStorage.spotify_access_token;
 }
@@ -29,14 +29,14 @@ async function TextCreatePlaylist(
         Value: "application/json",
       }
     );
-    console.log(createPlayListTest);
+
     return createPlayListTest;
   } catch (error) {
     console.log(error);
   }
 }
 
-// this function just gets playlists that are logged in the database and return them as an object
+// this function just gets playlists that are logged in the database and returns them as an object
 async function returnPlayListsInDatabase() {
   try {
     const getPlaylistsResponse = await axios.get("/get_playlists");
@@ -72,7 +72,7 @@ async function returnNewlyCreatedPlaylistID() {
           },
         }
       );
-      console.log(createPlayListTest);
+    
       return createPlayListTest;
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ async function returnNewlyCreatedPlaylistID() {
   return getNewTrackPlayLists();
 }
 
-// this function formats new tracks data then makes API call to spotify app and adds tracks to a pre-existing playlist
+// this function formats new tracks data then makes an API call to spotify app and adds tracks to a pre-existing playlist
 async function addTracksToSpotifyPlaylist(
   playlistID,
   arrayOfTrackDataFromDataBase
@@ -90,12 +90,12 @@ async function addTracksToSpotifyPlaylist(
   let arrayOfTrackIDsFormattedForAdding = [];
 
   Promise.all(
-    arrayOfTrackDataFromDataBase.map((item, index) => {
+    arrayOfTrackDataFromDataBase.map((item) => {
       const spotifyFormatting = `spotify:track:${item[2]}`;
       arrayOfTrackIDsFormattedForAdding.push(spotifyFormatting);
     })
   );
-  console.log(arrayOfTrackIDsFormattedForAdding);
+  
 
   try {
     const addToPlaylistAxiosPostRequest = await axios.post(
@@ -175,7 +175,7 @@ async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
     const firstPlayList = await returnNewlyCreatedPlaylistID();
     let spotifyPlaylistIDOnceLogged =
       formatPlayListInputAndBackendLog(firstPlayList);
-    // .then is used otherwise playlist ID would not display value
+    // .then is used over async await otherwise playlist ID would not display value
     await spotifyPlaylistIDOnceLogged.then((item) => {
       addTracksToSpotifyPlaylist(item[0], dataOfTrackAdded);
     });
@@ -185,7 +185,7 @@ async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
   }
 
 
-// 'playlistID' outside of logic to be acessed further down in code
+// 'playlistID' outside of logic to be accessed further down in code
   let playlistID;
   // object deconstructs below two values, if playlist's current month/year is in database, set its playlistID
   // value to the global scope var 'playlistID'
@@ -196,8 +196,7 @@ async function addToOrCreatePlaylistFunction(dataOfTrackAdded) {
     }
   });
 
-  // if 'ifPlaylistExistsReturnID' is , it has looked at database and there are none, created a new playlist
-  // with the same month and year as the given month/year
+  
   if (!playlistID) {
     // wrapped in an async function to call 'returnNewlyCreatedPlaylistID()' async
     (async function functionToCreateNewPlaylistIfNewMonth() {

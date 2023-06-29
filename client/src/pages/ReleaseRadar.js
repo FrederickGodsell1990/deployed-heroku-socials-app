@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   GoToProfileButton,
-  ReleaseRadarCoverArtImage,
   OuterDivForArrayOfNewTracksState,
   AlbumNameAndReleaseDateFlexBox,
   MoreInfoFlexBox,
   SubtitleH2,
   AlbumNameAndReleaseDateWrapper,
-} from "./styling/ComponentStyles.js";
-import {
-  addToOrCreatePlaylistFunction,
-  TextCreatePlaylist,
-  addTracksToSpotifyPlaylist,
-} from "./databaseOperations.js";
-import PullTrackData from "./PullDataForTrackFunction.js";
-import ArtistSpotifyIDFormatFunction from "./ArtistSpotifyIDFormatFunction.js";
+} from "../styling/ComponentStyles.js";
+import { addToOrCreatePlaylistFunction } from "../releaseRadarComponents/DatabaseOperations.js";
+import PullTrackData from "../releaseRadarComponents/PullDataForTrackFunction.js";
 
 const { spotify_access_token } = window.localStorage;
 console.log(spotify_access_token);
 
 // returns spotify release radar playlist data
-const releaseRaderAPICallFunction = async () => {
+export const releaseRaderAPICallFunction = async () => {
   try {
     const releaseRadarAPICall = await axios.get(
-      "https://api.spotify.com/v1/playlists/37i9dQZEVXbpTERBYDw7WM",
+      "https://api.spotify.com/v1/playlists/37i9dQZEVXbpTERBYDw7WM", // hardcoded release rader playlist - can make dynamci
       {
         headers: {
           Authorization: `Bearer ${spotify_access_token}`,
@@ -40,7 +34,7 @@ const releaseRaderAPICallFunction = async () => {
 
 // formats data from release radar API request into an object
 const formatNewTracksAsObjectFunction = (releaseRadarTracks) => {
-  return releaseRadarTracks.map((item, index) => {
+  return releaseRadarTracks.map((item) => {
     let artist2;
     // if track cites only one artist
     if (item.track.artists.length === 1) {
@@ -101,14 +95,14 @@ const sendRadarTracksToBackEndFunction = async (
     );
     const newTracks = axiosPost.data.arrayOfNewTracks;
 
-    console.log(axiosPost);
+    console.log("those not on database", axiosPost);
     return newTracks;
   } catch (err) {
     console.log(err);
   }
 };
 
-// function to remove call back end to remove single track from database. Seperate for testing
+// function to call back end to remove single track from database.
 const functionToRemoveSingleTrackfromDatabase = async (
   trackSpotifyID,
   dateAdded
@@ -133,15 +127,14 @@ const functionToRemoveSingleTrackfromDatabase = async (
 };
 
 const ReleaseRadarFunction = () => {
-  const [tracksObject, setTracksObject] = useState("");
   const [releaseRaderObject, setReleaseRaderObject] = useState("");
   const [arrayOfNewTracksState, setArrayOfNewTracksState] = useState("");
   const [moreInfo, setMoreInfo] = useState([]);
   const [getTracksButtonBeenClicked, setGetTracksButtonBeenClicked] =
     useState(false);
 
-  // function to call global scope function from requesting release radar playlist to passing to the back end
-  // and setting  ReleaseRadarFunction's state with new, unadded tracks
+  // function to call release radar API to return playlist to pass to the back end
+  // and sett ReleaseRadarFunction's state with new, unadded tracks
   const getReleaseRadarPlaylist = async () => {
     // call functions 'releaseRaderAPICallFunction' so it can be global in scope in the file for testing
     const awaitReleaseRaderAPICallFunction =
@@ -161,16 +154,17 @@ const ReleaseRadarFunction = () => {
 
     // Sets 'ReleaseRadarFunction''s 'arrayOfNewTracksState' with only unadded tracks
     setArrayOfNewTracksState(newTracksReturned);
-// lets state know that the search release rader button has been clicked once
+    // lets state know that the search release rader button has been clicked once
     setGetTracksButtonBeenClicked(true);
   };
 
-  // call the global function (that call the back end) and updates the components state so 'arrayOfNewTracksState'
+  // call the global function (that calls the back end) and updates the components state so 'arrayOfNewTracksState'
   // removes those selected to be removed
   const removeSingleTrackfromDatabase = async (trackSpotifyID, dateAdded) => {
     // sends call to back end to mark track as removed
     functionToRemoveSingleTrackfromDatabase(trackSpotifyID, dateAdded);
-    // maps over each new track, if removable tack re-set 'arrayOfNewTracksState' with a spliced array with the given track reomved
+    // maps over each new track, if the track is removable 'arrayOfNewTracksState' is re-set with a spliced array with
+    // the given track removed 
     arrayOfNewTracksState.forEach((item, index) => {
       const nestedArray = [...item];
       if (nestedArray[2] === trackSpotifyID) {
@@ -200,11 +194,9 @@ const ReleaseRadarFunction = () => {
     navigate("/");
   };
 
-
-
   return (
     <React.Fragment>
-      {/* // conditional rendering do indicate there are no new tracks once the search button has been clicked once or 
+      {/* // conditional rendering to indicate there are no new tracks once the search button has been clicked once or 
       // all new tracks have been removed by user */}
       {getTracksButtonBeenClicked === false && !arrayOfNewTracksState ? (
         <button onClick={getReleaseRadarPlaylist}>Find new tracks</button>
@@ -237,11 +229,12 @@ const ReleaseRadarFunction = () => {
             const [dateAdded] = x[3].split("|");
             const album = x[4];
             const albumReleaseDate = x[5];
-            const albumImage = x[6];
+           
 
             return (
               <React.Fragment key={i}>
                 <OuterDivForArrayOfNewTracksState>
+                  {/* iframe to to display spotify player */}
                   <iframe
                     style={{
                       borderRadius: "12px",
@@ -258,7 +251,7 @@ const ReleaseRadarFunction = () => {
                   ></iframe>
 
                   <br />
-                  {console.log("scriptElement", scriptElement)}
+                
 
                   <div>
                     <button
@@ -269,7 +262,7 @@ const ReleaseRadarFunction = () => {
                       Remove
                     </button>
                     <br />
-                    {/* conditional render of more info button to only disply if the track ID is not within the 
+                    {/* conditional render of 'more info' button to only disply if the track ID is not within the 
   'moreInfo array   */}
 
                     {(moreInfo.length === 0 ||

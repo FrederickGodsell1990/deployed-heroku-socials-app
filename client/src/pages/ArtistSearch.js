@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import WikiDataAPICallFunction from "./WikiDataAPIComponent";
-import { GoToProfileButton, ImageSize, WikiDataTextSize } from "./styling/ComponentStyles.js";
+import WikiDataAPICallFunction from "../WikiDataAPIComponent";
+import {
+  GoToProfileButton,
+  ImageSize,
+  WikiDataTextSize,
+} from "../styling/ComponentStyles.js";
 
 function ArtistSearch() {
   const [spotifyID, setSpotifyID] = useState("");
@@ -52,20 +56,22 @@ function ArtistSearch() {
       <h1>Artist Search</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input />
+        &nbsp;&nbsp;&nbsp;
         <button type={"submit"}>Search artist</button>
       </form>
+
       {artistName && artistImage && spotifyID && (
         <>
           <div>
             <h5>{artistName}</h5>
-            <ImageSize src={artistImage}/>
+            <ImageSize src={artistImage} />
             <WikiDataTextSize>
-            <WikiDataAPICallFunction SpotID={spotifyID} />
+              <WikiDataAPICallFunction SpotID={spotifyID} />
             </WikiDataTextSize>
           </div>
-          
         </>
       )}
+
       <GoToProfileButton onClick={functionToProfile}>
         Go to Profile
       </GoToProfileButton>

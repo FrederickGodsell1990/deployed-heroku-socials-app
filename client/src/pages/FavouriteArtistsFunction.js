@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import React, { useEffect, useState, Fragment } from "react";
-import WikiDataAPICallFunction from "./WikiDataAPIComponent";
+import React, { useEffect, useState } from "react";
+import WikiDataAPICallFunction from "../WikiDataAPIComponent";
 import {
   ImageSize,
   ImagesLeftToRight,
   WikiDataTextSize,
   GoToProfileButton,
-} from "./styling/ComponentStyles.js";
+} from "../styling/ComponentStyles.js";
 
 const FavouriteArtistsFunction = () => {
   const [favouriteArtistsID, setFavouriteArtistsID] = useState("");
@@ -18,7 +18,7 @@ const FavouriteArtistsFunction = () => {
   };
 
   useEffect(() => {
-    const spotifyFavouriteArtistsFunction = async () => {
+    (async () => {
       const favouriteArtistParams = {
         time_range: "medium_term",
         limit: 10,
@@ -39,9 +39,8 @@ const FavouriteArtistsFunction = () => {
 
         setFavouriteArtistsID(items);
       } catch (error) {}
-    };
-    spotifyFavouriteArtistsFunction();
-  }, []);
+    })();
+  });
 
   return (
     <>
@@ -52,7 +51,7 @@ const FavouriteArtistsFunction = () => {
       <ImagesLeftToRight>
         {favouriteArtistsID &&
           favouriteArtistsID.map((items) => {
-            console.log(items);
+            
             return (
               <React.Fragment key={items.id}>
                 {items.images && (

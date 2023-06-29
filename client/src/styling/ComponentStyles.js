@@ -216,3 +216,10 @@ display: flex;
   font-size: 20px;
 `
 
+export const FullTrackListButton = styled.button` 
+
+  opacity: 0.5;
+
+
+
+`

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import WikiDataAPICallFunction from "./WikiDataAPIComponent.js";
-import {
-  SocialsFlexBox,
-} from "./styling/ComponentStyles.js";
+import WikiDataAPICallFunction from "../WikiDataAPIComponent.js";
+import { SocialsFlexBox } from "../styling/ComponentStyles.js";
 
 let spotify_access_token;
 
 if (process.env.NODE_ENV === "development") {
   spotify_access_token =
-    "BQC4fMZ8h8HbeoL8V4UZzLO9x6mev4xSRep72dkZ3YxutV-QzR4IpGD8qCVnAft5FYo4yOnG_ECKStTs24QvzgUjfWIA9KAb0nxJ_Kv8zDi3qJFNhaQ1wwc3PCTieug1VaQDcmftnSRsbbM-p0imzn7Pc_LwiEAzfTz00I9vQwMrVoPYD6csAQa_-ptRePANXwI4LAXmFJTHsp7CJPzLkdpz8X5Mog_LRejDkeRno2RKP33-YCxy6P9_E5R034kXZwHMO_Rz4NJYxAsGAKXfkDN9T1VZJg";
+    "BQBfDoYsyV_gQvsjfJv-lZB15RIttQtmxHmQistFSbMpLJWTlJONYqscQRv9d_tG4R1C2F5ST8i60WhT8rDpREDeE6oSjMgXZFuuiWWR6b0otuHCPzv7nCiPhjoSA6m9JeECWAOMF81TLXZoSlUorcohArxNmTDvYfSTZyPHHRPlkYPogudqA4tbuGkV0Jq43iIgTOn7A5MkqRQOFzKFSzY6DXhC3XcuSBqQjabCcs9hzmwqBXdyrs_IQEgD1dsheqbydKvuzdRa2i4V1WXojDhCUH106w";
 } else {
   spotify_access_token = window.localStorage.spotify_access_token;
 }
@@ -19,11 +17,10 @@ function FunctionToReturnSingleArtistSpotifyID({ artistName }) {
   const [spotifyArtistIDAsState, setSpotifyArtistIDAsState] = useState("");
   const [spotifyArtistsImageAsState, setSpotifyArtistsImageAsState] =
     useState("");
-const [artistNameAsState, setArtistNameAsState ] = useState('');
+  const [artistNameAsState, setArtistNameAsState] = useState("");
   useEffect(() => {
     singleArtistSpotifyAPICall(artistName);
-    // just added so remove if needed
-    setArtistNameAsState(artistName)
+    setArtistNameAsState(artistName);
   }, [artistName]);
 
   const singleArtistSpotifyAPICall = async (IndividualArtistName) => {
@@ -42,13 +39,11 @@ const [artistNameAsState, setArtistNameAsState ] = useState('');
           type: "artist",
         },
       });
-      console.log(data);
 
       // extracts ID
       var spotifyArtistID = data.artists.items[0].id;
-      // extracts imags
+      // extracts images
       var spotifyArtistsImage = data.artists.items?.[0]?.images?.[0].url;
-      //   var spotifyArtistsNameFormal = data.
 
       // sets the API responses to state
       setSpotifyArtistIDAsState(spotifyArtistID);
@@ -58,27 +53,20 @@ const [artistNameAsState, setArtistNameAsState ] = useState('');
     }
   };
 
-  // return (
-
-  // <WikiDataAPICallFunction SpotImage={spotifyArtistsImageAsState} SpotID={spotifyArtistIDAsState}/>
-
-  // )
-
-  
-   return  (spotifyArtistsImageAsState && spotifyArtistIDAsState) ? (
-      <> 
+  return spotifyArtistsImageAsState && spotifyArtistIDAsState ? (
+    <>
       <SocialsFlexBox>
-      <div>{artistNameAsState}&nbsp; &nbsp;</div>
-      {"   "}
-      <WikiDataAPICallFunction
-        SpotImage={spotifyArtistsImageAsState}
-        SpotID={spotifyArtistIDAsState}
-      />
+        <div>{artistNameAsState}&nbsp; &nbsp;</div>
+        {"   "}
+        <WikiDataAPICallFunction
+          SpotImage={spotifyArtistsImageAsState}
+          SpotID={spotifyArtistIDAsState}
+        />
       </SocialsFlexBox>
-      </> 
-      
-    ) : ""
-  
+    </>
+  ) : (
+    ""
+  );
 }
 
 export default FunctionToReturnSingleArtistSpotifyID;

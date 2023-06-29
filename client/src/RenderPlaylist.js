@@ -4,16 +4,17 @@ import PlaylistTracksWaitinToBeSelected from "./PlaylistTracksWaitinToBeSelected
 import {
   ActivePlaylistFlexbox,
   PlaylistSingleLineFlexbox,
- ActivePlaylistTitle,
+  ActivePlaylistTitle,
+  FullTrackListButton,
 } from "./styling/ComponentStyles.js";
 
 const { spotify_access_token } = window.localStorage;
 
-function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
-  const [playlistAsState, setPlaylistAsState] = useState([]);
+function RenderPlaylist({ playlistSpotifyID }) {
   const [nameAsState, setNameAsState] = useState("");
   const [tracksAsState, setTracksAsState] = useState([]);
   const [trackSelectedToPlay, setTrackSelectedToPlay] = useState("");
+  const [fullTrackList, setFullTrackList] = useState(false);
 
   //when page first renders, 'getExistingPlaylist' call spotify API returning name of playlist and stores their
   //contained tracks as state
@@ -41,7 +42,8 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
     };
 
     getExistingPlaylist();
-  }, [nameAsState]);
+    // }, [nameAsState]);
+  }, [playlistSpotifyID]);
 
   // function to set 'trackSelectedToPlay' as state.
   const playSelectedTrack = (trackID) => {
@@ -68,12 +70,10 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
     );
   };
 
-  console.log("tracks as state", tracksAsState);
-
   return (
     <>
-     <br/>
-      {/* If no track is clicked to play, the default will be the first track in the playlist, if not it will be 'trackSelectedToPlay' */}
+      <br />
+      {/* If no track is clicked to play, the default will be the first track in the playlist */}
       {!trackSelectedToPlay && tracksAsState ? (
         tracksAsState.map(({ track: { id } }, index) => {
           if (index <= 0) {
@@ -86,17 +86,16 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
           return null; // Add a return statement for the "else" case
         })
       ) : (
-        <React.Fragment >
-             
+        <React.Fragment>
+          {/* else, the selcted track will play */}
           {functionToReturnSpotifyPlayer(trackSelectedToPlay)}
-          </React.Fragment>
-
+        </React.Fragment>
       )}
-     <br/>
+      <br />
       <ActivePlaylistTitle>
-      <div>{nameAsState}</div>
+        <div>{nameAsState}</div>
       </ActivePlaylistTitle>
-      {/* The first five tracks in the given playlist are rendered below the spotify player */}
+      {/* Full playlist rendered below the spotify player */}
       <ActivePlaylistFlexbox>
         {tracksAsState &&
           tracksAsState.map(
@@ -110,12 +109,31 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
               },
               index
             ) => {
-              if (index <= 5) {
+              if (fullTrackList === false) {
+                if (index <= 5) {
+                  return (
+                    // `${id}${index}` used instead of just ID to prevent 'two children with the same ID error
+                    <React.Fragment key={`${id}${index}`}>
+                      <PlaylistSingleLineFlexbox>
+                        <PlaylistTracksWaitinToBeSelected
+                          key={`${id}${index}`}
+                          trackName={trackName}
+                          artistName={artistName}
+                        />
+                        <button onClick={() => playSelectedTrack(id)}>
+                          Play track?
+                        </button>
+                      </PlaylistSingleLineFlexbox>
+                    </React.Fragment>
+                  );
+                }
+              }
+              if (fullTrackList === true) {
                 return (
-                  <React.Fragment key={id}>
+                  <React.Fragment key={`${id}${index}`}>
                     <PlaylistSingleLineFlexbox>
                       <PlaylistTracksWaitinToBeSelected
-                        key={id}
+                        key={`${id}${index}`}
                         trackName={trackName}
                         artistName={artistName}
                       />
@@ -128,6 +146,18 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
               }
             }
           )}
+
+        {/* // Toggle what displays on button if the paylist is collapsed or open */}
+
+        {fullTrackList ? (
+          <FullTrackListButton onClick={() => setFullTrackList(!fullTrackList)}>
+            Collapse track list
+          </FullTrackListButton>
+        ) : (
+          <FullTrackListButton onClick={() => setFullTrackList(!fullTrackList)}>
+            Full track list
+          </FullTrackListButton>
+        )}
       </ActivePlaylistFlexbox>
     </>
   );

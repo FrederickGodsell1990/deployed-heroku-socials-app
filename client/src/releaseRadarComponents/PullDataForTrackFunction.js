@@ -4,7 +4,7 @@ import ArtistSpotifyIDFormatFunction from './ArtistSpotifyIDFormatFunction.js'
 import {
  AlbumNameAndReleaseDateWrapper,
  SubtitleH2
-} from "./styling/ComponentStyles.js";
+} from "../styling/ComponentStyles.js";
 
 const PullTrackData = ({ artist, track }) => {
   const [artistState, setArtistState] = useState("");

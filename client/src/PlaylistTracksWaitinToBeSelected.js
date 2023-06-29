@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { TextToFade, SubtitleH2 } from "./styling/ComponentStyles.js";
+import React from "react";
+import { SubtitleH2 } from "./styling/ComponentStyles.js";
 
 const PlaylistTracksWaitinToBeSelected = ({ trackName, artistName }) => {
-  const isTextOverflowing = trackName.length > 20;
   const splicedTrackTitle = trackName.substring(0, 17);
   const splicedArtistName = artistName.substring(0, 17);
-  console.log(splicedTrackTitle);
+
+  // below is conditional rendering to make sure track + artist names don't appear too disproporionately large
+  // in the flex box
   return (
     <>
       {trackName && trackName.length > 20 && artistName.length > 20 ? (
