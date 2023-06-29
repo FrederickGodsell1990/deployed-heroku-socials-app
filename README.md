@@ -53,6 +53,7 @@ from-github-heroku-socials-app-staging
 │  │     │  │  ├─ April4thRemovedTrackToggleOff
 │  │     │  │  ├─ April9thCreatePlaylist
 │  │     │  │  ├─ June13thSocialsTweak
+│  │     │  │  ├─ June18thAddingTests
 │  │     │  │  ├─ March29thStashChanges
 │  │     │  │  ├─ May15thMaterialUI
 │  │     │  │  ├─ May7thMoreInfoButton
@@ -66,6 +67,7 @@ from-github-heroku-socials-app-staging
 │  │     └─ stash
 │  ├─ objects
 │  │  ├─ 03
+│  │  │  ├─ 471eba6b08c25925dabbf4cb969c83fe922462
 │  │  │  ├─ 7583e61cd0d9f58355450e0c68cf9ca443cea5
 │  │  │  ├─ d1581d7fb56a5cf638505a66bae35e6e38784c
 │  │  │  └─ e9789ffb19b25c6533fd819395749391bf2542
@@ -101,12 +103,17 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ dd5add955f68437f4321f91a85f8184ef773ed
 │  │  ├─ 1c
 │  │  │  └─ 8888fe00ae34b3c8d6f083148a20067c25994d
+│  │  ├─ 1d
+│  │  │  ├─ 7dac30a4fb21ce58b3ea8bd46ff2f2d0e59bc1
+│  │  │  └─ abd6ee54d610c5008d595093c1069d676f5de1
 │  │  ├─ 1f
 │  │  │  └─ 3a277d54d4886dc52b52610273b7dc66c3e484
 │  │  ├─ 20
 │  │  │  └─ e320c9d563e469ce16e61ce16dbeff5f257641
 │  │  ├─ 21
 │  │  │  └─ 3a88bf38b52a23a4e57b975f08fc10ead307f3
+│  │  ├─ 22
+│  │  │  └─ 250b8896892fea16cd6e3d0d222d2951abf467
 │  │  ├─ 23
 │  │  │  └─ 8b7bee40c0e907a5d01f814e279bee9de73ea4
 │  │  ├─ 24
@@ -116,6 +123,7 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ 07d36cbe3d07961aaa6910514bf3430d48e10e
 │  │  ├─ 26
 │  │  │  ├─ 0f08450aa99653b625f134cc24e4e28166e823
+│  │  │  ├─ 742d26dfa8086ca3857130bc314f3ebef83ac6
 │  │  │  └─ dff458585701b50bc75e52c10f0dfcbd79367f
 │  │  ├─ 28
 │  │  │  ├─ 2bb2595a43f0ee344ede9def48fe8030b50c1b
@@ -124,7 +132,10 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ dc214bb7eb817bc2fef0e30ea1642a1f05b9cc
 │  │  │  └─ f682cbe5b1accfea950f298c5e5dacfe6b3562
 │  │  ├─ 2d
-│  │  │  └─ 1246137aa540d425832dfb6e02ce37d571fd72
+│  │  │  ├─ 1246137aa540d425832dfb6e02ce37d571fd72
+│  │  │  └─ 3aa9af88dee98177b9cc0551454eb7d3a24f83
+│  │  ├─ 2f
+│  │  │  └─ bdd3854a71ac6148d41bc72499ee33595969f3
 │  │  ├─ 32
 │  │  │  └─ 5e4e3d96871d7a7d0aed37bcebf6fc8602db6e
 │  │  ├─ 35
@@ -145,11 +156,17 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ 554ce123662322665b69b9fce81d968a42cc2c
 │  │  │  └─ 667d6732d9017b3e56a8ce98f3cce389de25b7
 │  │  ├─ 45
-│  │  │  └─ 4de5b153d3e561dac588976022778b567f5b57
+│  │  │  ├─ 08b3940324e7c238ec046491f4674b0af1bb2e
+│  │  │  ├─ 4de5b153d3e561dac588976022778b567f5b57
+│  │  │  └─ f435042fc9bfc65d68b1819a703702a90d7d25
 │  │  ├─ 46
 │  │  │  └─ 8af34f060e04b4b4e18eeb85e8385389e71a28
 │  │  ├─ 47
 │  │  │  └─ 34b05d5a0ec8bc9f4bd3acd75648957f1ec951
+│  │  ├─ 48
+│  │  │  └─ 76b93f90ec83463b06c1cb67e6c40b990f924f
+│  │  ├─ 49
+│  │  │  └─ cd654775582c2e4cf9f026cacb41b70b71fc5e
 │  │  ├─ 4f
 │  │  │  ├─ 55d7491c4a71fa0b9a18341e8c1da46971b733
 │  │  │  └─ 8e85b84a867417a6b3631ab4e2feaa29b64d4e
@@ -161,10 +178,14 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ ff5981416c987cf3431707e3ecd332a7b38c0a
 │  │  ├─ 58
 │  │  │  └─ 65c5a660ccd69f22cfc35b953c48f9989cbdf7
+│  │  ├─ 5a
+│  │  │  └─ c43a06f8743198254b310db04f2a966f1033f3
 │  │  ├─ 5b
 │  │  │  └─ 24875e998c7976a6409d4c62220dedd8122027
 │  │  ├─ 5c
 │  │  │  └─ fae951accaae82d56d9e8c455802ae5a8d4f62
+│  │  ├─ 61
+│  │  │  └─ 0647b8634388b71255284c17e7f84dd7338f51
 │  │  ├─ 62
 │  │  │  └─ ef8c983aa4ad4d85e5fcbd67c6b43417f5814a
 │  │  ├─ 63
@@ -191,6 +212,8 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ 88426668677a6c4bc35cf1410dd92b8e61fb55
 │  │  ├─ 70
 │  │  │  └─ 6ca8c6140a798a6987af4005ada0633573627d
+│  │  ├─ 73
+│  │  │  └─ 64641e5aadd930ea7551089c1a6bcdd23095b9
 │  │  ├─ 76
 │  │  │  ├─ 64e5721f86c326866b93cf75e0fa02125ca81c
 │  │  │  ├─ 775ffacff67a430db05609388d420e3264ad5a
@@ -212,6 +235,10 @@ from-github-heroku-socials-app-staging
 │  │  ├─ 7d
 │  │  │  ├─ 924120ef0c4cb23ff184c444938774c4ed1bc1
 │  │  │  └─ bb7f931484452ee5d8535e72e739620dc44b62
+│  │  ├─ 81
+│  │  │  └─ 510d5904cb897d34835496ea18efb08f055ed5
+│  │  ├─ 82
+│  │  │  └─ 824af87a9ccca8f601a92132c6a901107cd29d
 │  │  ├─ 83
 │  │  │  ├─ a8a38d07e76c6f6d6a46f1d1c9b7f1bfdb8f7e
 │  │  │  └─ f34bac59d03f10652bceb91ffc34660f7ccb20
@@ -227,7 +254,8 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ cc2036ec731867bd94c19f44634f1f6e885a78
 │  │  │  └─ e14190ae7f9e051e82b1153637498e9dc0cb7a
 │  │  ├─ 8a
-│  │  │  └─ 0a24637e84996ab4e36ec0dd0e969dba2290d4
+│  │  │  ├─ 0a24637e84996ab4e36ec0dd0e969dba2290d4
+│  │  │  └─ 378d97550df35dd006637d3482efee703ef35e
 │  │  ├─ 8c
 │  │  │  └─ 8e068d221302b0403ae782ae5b7013a7f04dec
 │  │  ├─ 8d
@@ -245,6 +273,7 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ 48ea8f5be05bb5f4e50325e0292473428407e9
 │  │  │  └─ cbcef3c802515ad3df7263e45475f3174c1e30
 │  │  ├─ 9b
+│  │  │  ├─ 312a453aef5ba97e817e0cab886837e89f8971
 │  │  │  └─ 9d1a5e4c913787d1a354a2c1b1397024c3f209
 │  │  ├─ 9c
 │  │  │  └─ fe228e89cd7f31ca94daff6bb7b2a564bf5566
@@ -273,7 +302,8 @@ from-github-heroku-socials-app-staging
 │  │  ├─ b0
 │  │  │  └─ 6f979f8facb9f1c92e13418eb6d51165f9f881
 │  │  ├─ b1
-│  │  │  └─ 41f877600e5276e00fb5d9fc6826b1e2b07b63
+│  │  │  ├─ 41f877600e5276e00fb5d9fc6826b1e2b07b63
+│  │  │  └─ 592c33289c06e25d4f0341b65c4278eaf333d3
 │  │  ├─ b3
 │  │  │  ├─ 2926919f19802782b48feb607344a3173b6ce9
 │  │  │  └─ 6fb80a560c5ed500eb0197f73eae197384aee4
@@ -281,6 +311,8 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ ed58cf12645e0b43dca7ccde6b4375b6cfc55f
 │  │  ├─ b5
 │  │  │  └─ cfc99b5cdba9f9659dacc24941db4a17f9fc5c
+│  │  ├─ b8
+│  │  │  └─ cb182eca832104b4f4bf4a1dfc50c3004ea606
 │  │  ├─ ba
 │  │  │  └─ e98b3cc3da30d0563b23dda9c7dd735a563755
 │  │  ├─ bb
@@ -296,6 +328,7 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ 1105efee2ebe91f541c9c7959c230f89a19f35
 │  │  │  └─ cf72832de80a0ed7be65ae172c308b941762fa
 │  │  ├─ c2
+│  │  │  ├─ 710245f3830b99439918f69db7ab151ccee455
 │  │  │  └─ b6e85a7433fd9f29df001af4689cd427a3a2d9
 │  │  ├─ c3
 │  │  │  └─ 758124c4a8cd256bf87604585456041b1c8b76
@@ -317,12 +350,15 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ 06ea2fe7463668a89c697ae0852122bdce2c12
 │  │  │  └─ 2bdb8538dc34c777738761fa09c8facdc7139e
 │  │  ├─ d1
+│  │  │  ├─ 5b585984c04a6a92c35d20be7a8937b5ab5d3f
 │  │  │  └─ 6ea2ccb96d99c4455dd547243bc7caa5353cb3
 │  │  ├─ d2
 │  │  │  └─ 8a85549f2e969ac153eba523ac9453dfd13565
 │  │  ├─ d4
 │  │  │  ├─ 614a60f3b455676be7e12be48df59c30945fb6
 │  │  │  └─ 87329322c00048e6a52cc28e6f00a52577d0fc
+│  │  ├─ d6
+│  │  │  └─ 8f61070883dc048db88382311d3c41cb96bba9
 │  │  ├─ d7
 │  │  │  ├─ 4ed2c878464c9cc70036ac5d202cd10beb6fed
 │  │  │  ├─ ab75f01c05f7c3d4ca38eb2714e124d35cefad
@@ -330,8 +366,11 @@ from-github-heroku-socials-app-staging
 │  │  ├─ d8
 │  │  │  └─ 36911bbd76c1602814fc88a44a983c35eefcd5
 │  │  ├─ d9
+│  │  │  ├─ b265cdb4ebd519920513b5b502898497048c6a
 │  │  │  └─ b7adbb6987e36b353a1d10207c171f86186e52
 │  │  ├─ db
+│  │  │  ├─ 8d8f308089fd1db2b6daf83ac90a2721ae7998
+│  │  │  ├─ b25091b07c4296835cd8b3fb36075aa4e52e67
 │  │  │  └─ bd98ee401bac7df9937bc87892444c58327e0f
 │  │  ├─ dc
 │  │  │  ├─ 4c75ac5dae1c5b90383e1ce2a10f26dfb23d46
@@ -348,7 +387,10 @@ from-github-heroku-socials-app-staging
 │  │  │  ├─ 20ee73a056b035a975363e139c96f27590db46
 │  │  │  └─ c938da37515266b0694cb2a922aac24be6b84a
 │  │  ├─ e3
-│  │  │  └─ c4ae5867454905b66457c894a569f6eb495e3c
+│  │  │  ├─ c4ae5867454905b66457c894a569f6eb495e3c
+│  │  │  └─ d0b3862d2927f4a597269dd7c6bd9b964363c5
+│  │  ├─ e4
+│  │  │  └─ 375bc85f75a853459596ed167f87f245d6b421
 │  │  ├─ e6
 │  │  │  └─ 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
 │  │  ├─ e8
@@ -380,6 +422,7 @@ from-github-heroku-socials-app-staging
 │  │  │  └─ dbc7df805c8a82843203fa55415500ddc6565b
 │  │  ├─ fc
 │  │  │  ├─ 0ae7d14d10852fff65ee3cfb5f328d9b046969
+│  │  │  ├─ 6e21e10112a845fe7d05f27d484c30316015a8
 │  │  │  └─ bc1781350fab8ea2adac1bcdf9d3eedda7152e
 │  │  ├─ fd
 │  │  │  ├─ 4f5297e66e5b25df086254446d5f174b8ff833
@@ -416,6 +459,7 @@ from-github-heroku-socials-app-staging
 │     │  │  ├─ April4thRemovedTrackToggleOff
 │     │  │  ├─ April9thCreatePlaylist
 │     │  │  ├─ June13thSocialsTweak
+│     │  │  ├─ June18thAddingTests
 │     │  │  ├─ March29thStashChanges
 │     │  │  ├─ May15thMaterialUI
 │     │  │  ├─ May7thMoreInfoButton
@@ -468,43 +512,31 @@ from-github-heroku-socials-app-staging
 │     ├─ App.css
 │     ├─ App.js
 │     ├─ App.test.js
-│     ├─ ArtistSearch.js
-│     ├─ ArtistSpotifyIDFormatFunction.js
-│     ├─ FavouriteArtistsFunction.js
-│     ├─ FunctionToReturnSingleArtistSpotifyID.js
-│     ├─ GoogleNews.js
 │     ├─ Login.js
-│     ├─ PlaylistTrackAsStatic.js
 │     ├─ PlaylistTracksWaitinToBeSelected.js
-│     ├─ PlaylistsComponent.js
-│     ├─ Profile.js
-│     ├─ PullDataForTrackFunction.js
-│     ├─ Redux
-│     │  ├─ Action.js
-│     │  ├─ Counter.js
-│     │  ├─ Reducer.js
-│     │  └─ Store.js
-│     ├─ ReleaseArtistSearch.js
 │     ├─ RenderPlaylist.js
+│     ├─ Spotify.js
 │     ├─ WikiDataAPIComponent.js
-│     ├─ databaseOperations.js
 │     ├─ index.css
 │     ├─ index.js
 │     ├─ logo.svg
-│     ├─ releaseRadar.js
+│     ├─ pages
+│     │  ├─ ArtistSearch.js
+│     │  ├─ FavouriteArtistsFunction.js
+│     │  ├─ Profile.js
+│     │  └─ ReleaseRadar.js
+│     ├─ releaseRadarComponents
+│     │  ├─ ArtistSpotifyIDFormatFunction.js
+│     │  ├─ DatabaseOperations.js
+│     │  ├─ FunctionToReturnSingleArtistSpotifyID.js
+│     │  ├─ GoogleNews.js
+│     │  └─ PullDataForTrackFunction.js
 │     ├─ reportWebVitals.js
 │     ├─ setupTests.js
-│     ├─ spotify.js
-│     ├─ styling
-│     │  ├─ ComponentStyles.js
-│     │  ├─ GlobalStyles.js
-│     │  └─ variables.js
-│     └─ test
-│        ├─ .babelrc.js
-│        └─ releaseRadar.js
-├─ controllers
-│  └─ feed.js
-├─ databaseOperations.js
+│     └─ styling
+│        ├─ ComponentStyles.js
+│        ├─ GlobalStyles.js
+│        └─ variables.js
 ├─ index.js
 ├─ models
 │  ├─ releaseRadarSchema.js
@@ -512,8 +544,6 @@ from-github-heroku-socials-app-staging
 │  └─ singleTrack.js
 ├─ package-lock.json
 ├─ package.json
-├─ test
-│  └─ releaseRadar.js
 └─ webpack.config.js
 
 ```

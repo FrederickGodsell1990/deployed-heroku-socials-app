@@ -18,7 +18,6 @@
     "build": "cd client/ && npm install && npm run build",
     "start-server": "node index.js",
     "test": "mocha --require @babel/register --require client/src/test/.babelrc.js --recursive client/src/test --trace-warnings"
-
   },
   "keywords": [],
   "author": "",
