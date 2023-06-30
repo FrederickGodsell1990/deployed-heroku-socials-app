@@ -94,7 +94,7 @@ function RenderPlaylist({ monthAndYearCreated, playlistSpotifyID }) {
       )}
      <br/>
       <ActivePlaylistTitle>
-      <div>{nameAsState}</div>
+      <div>{nameAsState} CHANGE</div>
       </ActivePlaylistTitle>
       {/* The first five tracks in the given playlist are rendered below the spotify player */}
       <ActivePlaylistFlexbox>
