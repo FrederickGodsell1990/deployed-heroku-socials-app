@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { accessToken } from "./Spotify";
+import { accessToken } from "./spotify";
 import ArtistSearch from "./pages/ArtistSearch";
 import Profile from "./pages/Profile";
 import FavouriteArtistsFunction from "./pages/FavouriteArtistsFunction";

@@ -93,7 +93,9 @@ function RenderPlaylist({ playlistSpotifyID }) {
       )}
       <br />
       <ActivePlaylistTitle>
+
         <div>{nameAsState}</div>
+
       </ActivePlaylistTitle>
       {/* Full playlist rendered below the spotify player */}
       <ActivePlaylistFlexbox>
