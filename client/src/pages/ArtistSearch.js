@@ -63,11 +63,12 @@ function ArtistSearch() {
       {artistName && artistImage && spotifyID && (
         <>
           <div>
+            <br/>
             <h5>{artistName}</h5>
             <ImageSize src={artistImage} />
-            <WikiDataTextSize>
+            <>
               <WikiDataAPICallFunction SpotID={spotifyID} />
-            </WikiDataTextSize>
+            </>
           </div>
         </>
       )}

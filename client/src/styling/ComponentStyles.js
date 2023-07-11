@@ -13,8 +13,8 @@ export const GoToProfileButton = styled.button`
 `;
 
 export const ImageSize = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 260px;
+  height: 260px;
   padding: 6px;
 `;
 
@@ -30,7 +30,7 @@ export const WikiDataTextSize = styled.p`
 `;
 
 export const WikiDataNoFileTextFormat = styled.p`
-  font-size: 10px;
+  font-size: 16px;
   colour: grey;
   margin: 4px;
 `;
@@ -220,6 +220,26 @@ export const FullTrackListButton = styled.button`
 
   opacity: 0.5;
 
-
-
 `
+
+export const BoldParagraph = styled.p`
+  font-weight: bold;
+  font-size: 22px;
+`;
+
+export const ReleaseRaderParaFlexBox = styled.span`
+display: flex;
+flex-direction: column;
+background-color: rgb(119, 119, 119);
+justify-content: center;
+font-size: 40px;
+
+border-radius: 14px;
+padding : 10px;
+
+`;
+
+export const StyledParagraph = styled.p`
+  font-size: 22px;
+`;
+
