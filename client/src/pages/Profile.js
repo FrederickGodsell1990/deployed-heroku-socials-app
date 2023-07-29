@@ -118,8 +118,11 @@ const Profile = () => {
               <button onClick={functionToMongoDBFunction}>Release Radar</button>
               <button onClick={logout}>Log out</button>
             </NavigationBar>
+
           </div>
+
         </ProfilePageFlexbox>
+        &nbsp; &nbsp;
       </React.Fragment>
     </React.Fragment>
   );
