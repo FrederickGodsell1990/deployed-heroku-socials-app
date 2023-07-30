@@ -111,11 +111,11 @@ const Profile = () => {
           <div>
             <h3>Pages & Actions</h3>
             <NavigationBar>
-              <button onClick={functionToArtistSearch}>Artist Search</button>
+              <button onClick={functionToArtistSearch}>Artist search</button>
               <button onClick={functionToFavouriteArtists}>
-                Favourite Artists
+                Favourite artists
               </button>
-              <button onClick={functionToMongoDBFunction}>Release Radar</button>
+              <button onClick={functionToMongoDBFunction}>Find new tracks</button>
               <button onClick={logout}>Log out</button>
             </NavigationBar>
 
